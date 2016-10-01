@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MangaCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="1dp">
+
+<ImageView
+    android:id="@+id/imgCover"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:scaleType="fitXY"
+    tools:src="@drawable/thumb" />
+
+    <LinearLayout
+        android:id="@+id/MangaNameHolder"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:padding="16dp"
+        android:layout_gravity="bottom"
+        android:background="@android:drawable/screen_background_dark_transparent"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="left|clip_horizontal"
+            android:textSize="12sp"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
+            android:textColor="@android:color/white"
+            tools:text="Nome do Manga"
+            android:layout_weight="2"
+            android:layout_marginRight="16dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:srcCompat="@android:drawable/btn_star_big_off"
+            android:layout_weight="1"
+            android:id="@+id/imageButton" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mainHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+
+
+</android.support.v7.widget.CardView>
