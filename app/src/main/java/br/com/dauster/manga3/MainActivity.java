@@ -1,9 +1,10 @@
 package br.com.dauster.manga3;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,21 +15,24 @@ import android.view.MenuItem;
 
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
-import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.dauster.manga3.Adapter.MangaAdapter;
+import br.com.dauster.manga3.Loader.MangaSearchTask;
 import br.com.dauster.manga3.Model.Manga;
-import br.com.dauster.manga3.Model.MangaHttp;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
+        LoaderManager.LoaderCallbacks<List<Manga>>{
 
+    private static final String MANGA_ARGS = "args" ;
+    private static final int LOADER_ID = 1 ;
     RecyclerView mRecyclerView;
     MangaAdapter mAdapter;
     List<Manga> mMangasList;
     BottomNavigationView bottomNavigationView;
+    LoaderManager mLoaderManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        new MangaTask().execute("ALL");
+        mLoaderManager = getSupportLoaderManager();
+        Bundle params = new Bundle();
+        params.putString(MANGA_ARGS, "ALL");
+        mLoaderManager.initLoader(LOADER_ID, params, this);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);
 
@@ -77,15 +84,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         bottomNavigationView.addTab(bottomNavigationItem1);
         bottomNavigationView.addTab(bottomNavigationItem2);
 
-        bottomNavigationView.setOnBottomNavigationItemClickListener(new OnBottomNavigationItemClickListener() {
-            @Override
-            public void onNavigationItemClick(int index) {
-                if(index == 0)
-                new MangaTask().execute("ALL");
-            }
-        });
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,7 +101,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onQueryTextSubmit(String s) {
         bottomNavigationView.selectTab(2);
-        new MangaTask().execute(s);
+
+        LoaderManager lm = getSupportLoaderManager();
+        Bundle params = new Bundle();
+        params.putString(MANGA_ARGS, s);
+        lm.restartLoader(LOADER_ID, params, this);
         return true;
     }
 
@@ -110,24 +114,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return true;
     }
 
-    private class MangaTask extends AsyncTask<String,Void,List<Manga>> {
-        @Override
-        protected List<Manga> doInBackground(String... strings) {
-            if(strings[0] == "ALL") {
-                return MangaHttp.searchMangas();
-            }else{
-                return MangaHttp.searchManga(strings[0]);
-            }
-        }
 
-        @Override
-        protected void onPostExecute(List<Manga> mangas) {
-            super.onPostExecute(mangas);
-            if(mMangasList != null && mangas.size() > 0){
-                mMangasList.clear();
-                mMangasList.addAll(mangas);
-                mAdapter.notifyDataSetChanged();
-            }
+    @Override
+    public Loader<List<Manga>> onCreateLoader(int id, Bundle args) {
+
+        String s = args != null ? args.getString(MANGA_ARGS) : null;
+        return new MangaSearchTask(this, s, mMangasList);
+    }
+
+
+    @Override
+    public void onLoadFinished(Loader<List<Manga>> loader, List<Manga> mangas) {
+        if(mMangasList != null && mangas.size() > 0){
+            mMangasList.clear();
+            mMangasList.addAll(mangas);
+            mAdapter.notifyDataSetChanged();
         }
     }
+
+    @Override
+    public void onLoaderReset(Loader<List<Manga>> loader) {
+
+    }
+
 }

@@ -16,9 +16,6 @@ import java.util.List;
 import br.com.dauster.manga3.Model.Manga;
 import br.com.dauster.manga3.R;
 
-/**
- * Created by Dauster on 19/09/16.
- */
 public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.VH> {
 
     Context mContext;

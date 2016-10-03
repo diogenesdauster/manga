@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,9 +16,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import br.com.dauster.manga3.Model.Manga;
-import br.com.dauster.manga3.Model.MangaHttp;
+import br.com.dauster.manga3.Http.MangaHttp;
 
-public class MangaDetailActivity extends AppCompatActivity {
+public class MangaDetailActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Manga>{
 
     public static final String EXTRA_MANGAID ="mangaId" ;
 
@@ -64,6 +67,21 @@ public class MangaDetailActivity extends AppCompatActivity {
 
     private Context getContext(){
         return this;
+    }
+
+    @Override
+    public Loader<Manga> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Manga> loader, Manga data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Manga> loader) {
+
     }
 
     private class MangaTask2 extends AsyncTask<String,Void,Manga> {

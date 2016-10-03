@@ -1,4 +1,4 @@
-package br.com.dauster.manga3.Model;
+package br.com.dauster.manga3.Http;
 
 import com.google.gson.Gson;
 
@@ -10,13 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.dauster.manga3.Model.Manga;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by Dauster on 19/09/16.
- */
 public class MangaHttp {
 
 
