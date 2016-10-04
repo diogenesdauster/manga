@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public Loader<List<Manga>> onCreateLoader(int id, Bundle args) {
 
         String s = args != null ? args.getString(MANGA_ARGS) : null;
-        return new MangaSearchTask(this, s, mMangasList);
+        return new MangaSearchTask(this, s);
     }
 
 

@@ -13,23 +13,20 @@ import br.com.dauster.manga3.Model.Manga;
 public class MangaSearchTask extends AsyncTaskLoader<List<Manga>> {
 
     List<Manga> mangas;
-    String args;
+    String query;
 
 
-    public MangaSearchTask(Context context,String args,List<Manga> mangas) {
+    public MangaSearchTask(Context context,String query) {
         super(context);
-        this.args = args;
+        this.query = query;
         this.mangas = new ArrayList<>();
-        if(mangas != null){
-            this.mangas.addAll(mangas);
-        }
 
     }
 
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-        if (args != null) {
+        if (query != null) {
             forceLoad();
         } else {
             deliverResult(mangas);
@@ -38,10 +35,12 @@ public class MangaSearchTask extends AsyncTaskLoader<List<Manga>> {
 
     @Override
     public List<Manga> loadInBackground() {
-        if(args == "ALL") {
-            return MangaHttp.searchMangas();
+        if(query == "ALL") {
+            mangas.addAll(MangaHttp.searchMangas());
         }else{
-            return MangaHttp.searchManga(args);
+            mangas.addAll(MangaHttp.searchManga(query));
         }
+        query = null;
+        return mangas;
     }
 }

@@ -1,7 +1,6 @@
 package br.com.dauster.manga3;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,14 +14,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import br.com.dauster.manga3.Loader.MangaSearchById;
 import br.com.dauster.manga3.Model.Manga;
-import br.com.dauster.manga3.Http.MangaHttp;
 
 public class MangaDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Manga>{
 
     public static final String EXTRA_MANGAID ="mangaId" ;
-
+    private static final int LOADER_ID_DETAIL =2 ;
 
     ImageView mImgCover;
     TextView  mTextAuthor;
@@ -31,6 +30,7 @@ public class MangaDetailActivity extends AppCompatActivity implements
     TextView  mTextLastUpd;
     TextView  mTextGenre;
     TextView  mTextInfo;
+    LoaderManager mLoaderManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,10 @@ public class MangaDetailActivity extends AppCompatActivity implements
         mTextInfo = (TextView) findViewById(R.id.textInfo);
 
         String mangaid = getIntent().getExtras().getString(EXTRA_MANGAID);
-        new MangaTask2().execute(mangaid);
+
+        mLoaderManager = getSupportLoaderManager();
+        Bundle params = getIntent().getExtras();
+        mLoaderManager.initLoader(LOADER_ID_DETAIL, params, this);
 
     }
 
@@ -71,11 +74,24 @@ public class MangaDetailActivity extends AppCompatActivity implements
 
     @Override
     public Loader<Manga> onCreateLoader(int id, Bundle args) {
-        return null;
+        String s = args != null ? args.getString(EXTRA_MANGAID) : null;
+        return new MangaSearchById(this,s);
     }
 
     @Override
-    public void onLoadFinished(Loader<Manga> loader, Manga data) {
+    public void onLoadFinished(Loader<Manga> loader, Manga manga) {
+        if(manga != null){
+            Glide.with(getContext()).load(manga.getCover()).
+                    placeholder(R.drawable.ic_do_not_disturb_black_200dp).
+                    into(mImgCover);
+//                mTextAuthor.setText((CharSequence) manga.getAuthor());
+            //mTextStatus.setText(m.getGenres().);
+            mTextName.setText(manga.getName());
+            mTextLastUpd.setText(manga.getLastUpdate());
+            //mTextGenre.setText(.getGenres());
+            mTextInfo.setText(manga.getInfo());
+
+        }
 
     }
 
@@ -83,30 +99,5 @@ public class MangaDetailActivity extends AppCompatActivity implements
     public void onLoaderReset(Loader<Manga> loader) {
 
     }
-
-    private class MangaTask2 extends AsyncTask<String,Void,Manga> {
-        @Override
-        protected Manga doInBackground(String... strings) {
-            return MangaHttp.searchMangaById(strings[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Manga manga) {
-            super.onPostExecute(manga);
-            if(manga != null){
-                Glide.with(getContext()).load(manga.getCover()).
-                        placeholder(R.drawable.ic_do_not_disturb_black_200dp).
-                        into(mImgCover);
-//                mTextAuthor.setText((CharSequence) manga.getAuthor());
-                //mTextStatus.setText(m.getGenres().);
-                mTextName.setText(manga.getName());
-                mTextLastUpd.setText(manga.getLastUpdate());
-                //mTextGenre.setText(.getGenres());
-                mTextInfo.setText(manga.getInfo());
-
-            }
-        }
-    }
-
 
 }
