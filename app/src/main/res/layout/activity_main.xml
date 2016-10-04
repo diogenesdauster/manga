@@ -7,16 +7,10 @@
     android:orientation="vertical"
     tools:context="br.com.dauster.manga3.MainActivity">
 
-    <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
+    <fragment
+        android:id="@+id/fragmentList"
+        android:name="br.com.dauster.manga3.Fragments.MangasListFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lista"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
