@@ -81,15 +81,17 @@ public class MangaDetailActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(Loader<Manga> loader, Manga manga) {
         if(manga != null){
-            Glide.with(getContext()).load(manga.getCover()).
-                    placeholder(R.drawable.ic_do_not_disturb_black_200dp).
-                    into(mImgCover);
 //                mTextAuthor.setText((CharSequence) manga.getAuthor());
             //mTextStatus.setText(m.getGenres().);
             mTextName.setText(manga.getName());
             mTextLastUpd.setText(manga.getLastUpdate());
             //mTextGenre.setText(.getGenres());
             mTextInfo.setText(manga.getInfo());
+
+            Glide.with(getContext()).load(manga.getCover()).
+                    placeholder(R.drawable.ic_do_not_disturb_black_200dp).
+                    into(mImgCover);
+
 
         }
 

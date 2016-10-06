@@ -8,6 +8,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -18,12 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.dauster.manga3.Adapter.BottomNavigationAdapter;
 import br.com.dauster.manga3.Adapter.MangaAdapter;
 import br.com.dauster.manga3.Loader.MangaSearchTask;
 import br.com.dauster.manga3.MangaDetailActivity;
@@ -71,6 +72,23 @@ public class MangasListFragment extends Fragment implements SearchView.OnQueryTe
 
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottomNavigation);
 
+        ViewPager viewPager = new ViewPager(getActivity());
+        BottomNavigationAdapter mBtNavAdapter = new
+                BottomNavigationAdapter(getActivity().getSupportFragmentManager());
+        viewPager.setAdapter(mBtNavAdapter);
+
+        int[] mColorsBtNav = {ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                             ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                             ContextCompat.getColor(getActivity(), R.color.colorPrimary)};
+
+        int[] mImgsBtNav  = {R.drawable.ic_view_comfy_black_24dp,
+                             R.drawable.ic_search_black_24dp,
+                             R.drawable.ic_star_border_black_24dp};
+
+        bottomNavigationView.setUpWithViewPager(viewPager,mColorsBtNav,mImgsBtNav);
+
+        /*
+
         BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
                 ("Home", ContextCompat.getColor(getActivity(), R.color.colorPrimary), R.drawable.ic_view_comfy_black_24dp);
         BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
@@ -80,7 +98,7 @@ public class MangasListFragment extends Fragment implements SearchView.OnQueryTe
         bottomNavigationView.addTab(bottomNavigationItem);
         bottomNavigationView.addTab(bottomNavigationItem1);
         bottomNavigationView.addTab(bottomNavigationItem2);
-
+        */
 
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.lista);
