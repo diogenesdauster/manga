@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/fragmentList"
-        android:name="br.com.dauster.manga3.Fragments.MangasListFragment"
+        android:name="br.com.dauster.manga3.Fragments.MangasMainListAllFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

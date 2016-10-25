@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textLastUpdate"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:text="@string/textLastUpdate" />
+
+    <TextView
+        android:id="@+id/textLastUpd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="24-05-2016" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textGenre"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:text="@string/textGenre" />
+
+    <TextView
+        android:id="@+id/textGenre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Action,Aventure,other.." />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textInfo"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:text="@string/textInfo" />
+
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Before Naruto's birth, a great demon fox had attacked the Hidden Leaf Village.
+        A man known as the 4th Hokage sealed the demon inside the newly born Naruto, causing him to
+        unknowingly grow up detested by his fellow villagers. Despite his lack of talent in many
+        areas of ninjutsu, Naruto strives for only one goal: to gain the title of Hokage, the
+        strongest ninja in his village. Desiring the respect he never received, Naruto works
+        towards his dream with fellow friends Sasuke and Sakura and mentor Kakashi as they go
+        through many trials and battles that come with being a ninja." />
+
+</LinearLayout>

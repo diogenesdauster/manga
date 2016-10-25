@@ -10,15 +10,15 @@ public class Manga {
     @SerializedName("mangaId")
     private String mMangaId;
     @SerializedName("artist")
-    private List<String> mArtist;
+    private String[] mArtist;
     @SerializedName("author")
-    private List<String> mAuthor;
+    private String[] mAuthor;
     @SerializedName("chapters")
     private List<Chapter> mChapters;
     @SerializedName("cover")
     private String mCover;
     @SerializedName("genres")
-    private List<String> mGenres;
+    private String[] mGenres;
     @SerializedName("href")
     private String mHref;
     @SerializedName("info")
@@ -32,19 +32,35 @@ public class Manga {
     @SerializedName("yearOfRelease")
     private Long mYearOfRelease;
 
-    public List<String> getArtist() {
-        return mArtist;
+    public String getArtist() {
+        String mRetorno = "";
+
+        for (int i = 0; i < mArtist.length ; i++) {
+            mRetorno+= mArtist[i];
+            if(i != mArtist.length-1){
+                mRetorno+=" , ";
+            }
+        }
+        return mRetorno;
     }
 
-    public void setArtist(List<String> artist) {
+    public void setArtist(String[] artist) {
         mArtist = artist;
     }
 
-    public List<String> getAuthor() {
-        return mAuthor;
+    public String getAuthor() {
+        String mRetorno = "";
+
+        for (int i = 0; i < mAuthor.length ; i++) {
+            mRetorno+= mAuthor[i];
+            if(i != mAuthor.length-1){
+                mRetorno+=" , ";
+            }
+        }
+        return mRetorno;
     }
 
-    public void setAuthor(List<String> author) {
+    public void setAuthor(String[] author) {
         mAuthor = author;
     }
 
@@ -64,11 +80,19 @@ public class Manga {
         mCover = cover;
     }
 
-    public List<String> getGenres() {
-        return mGenres;
+    public String getGenres() {
+        String mRetorno = "";
+
+        for (int i = 0; i < mGenres.length ; i++) {
+            mRetorno+= mGenres[i];
+            if(i != mGenres.length-1){
+                mRetorno+=" , ";
+            }
+        }
+        return mRetorno;
     }
 
-    public void setGenres(List<String> genres) {
+    public void setGenres(String[] genres) {
         mGenres = genres;
     }
 
@@ -127,4 +151,5 @@ public class Manga {
     public void setMangaId(String mMangaId) {
         this.mMangaId = mMangaId;
     }
+
 }
