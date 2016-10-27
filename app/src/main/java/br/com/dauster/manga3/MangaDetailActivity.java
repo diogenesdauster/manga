@@ -96,7 +96,7 @@ public class MangaDetailActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(Loader<Manga> loader, Manga manga) {
         if(manga != null){
-            mTextAuthor.setText(manga.getAuthor());
+            //mTextAuthor.setText(manga.getAuthor());
             mTextStatus.setText(manga.getStatus());
             mTextName.setText(manga.getName());
             mToolbar.setTitle(manga.getName());

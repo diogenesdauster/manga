@@ -5,25 +5,34 @@ import com.google.gson.annotations.SerializedName;
 
 public class Page {
 
+    private Long mChapterId;
     @SerializedName("pageId")
     private Long mPageId;
     @SerializedName("url")
     private String mUrl;
 
+
+    public Long getChapterId() {
+        return mChapterId;
+    }
+
+    public void setChapterId(Long mChapterId) {
+        this.mChapterId = mChapterId;
+    }
+
     public Long getPageId() {
         return mPageId;
     }
 
-    public void setPageId(Long pageId) {
-        mPageId = pageId;
+    public void setPageId(Long mPageId) {
+        this.mPageId = mPageId;
     }
 
     public String getUrl() {
         return mUrl;
     }
 
-    public void setUrl(String url) {
-        mUrl = url;
+    public void setUrl(String mUrl) {
+        this.mUrl = mUrl;
     }
-
 }

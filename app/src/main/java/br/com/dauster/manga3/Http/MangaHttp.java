@@ -1,6 +1,7 @@
 package br.com.dauster.manga3.Http;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.dauster.manga3.Adapter.MangaTypeAdapter;
 import br.com.dauster.manga3.Model.Manga;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -50,7 +52,7 @@ public class MangaHttp {
     //chapterid   NUMBER 1
 
 
-    public static List<Manga> searchMangas(){
+    public static List<Manga> getListMangas(){
 
         // cria lista vazia que será alimentada com retorno do JSON
         List<Manga> Mangas = new ArrayList<>();
@@ -64,7 +66,9 @@ public class MangaHttp {
             JSONArray jsonArray = new JSONArray(json); // pega a lista de objetos
             String jsonList = jsonArray.toString();    // converte a lista de objeto em string
 
-            Gson gson = new Gson(); // objeto gson para parse
+            Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Manga.class,
+                    new MangaTypeAdapter()).create(); // objeto gson para parse
+
             Manga[] mangasArray = gson.fromJson(jsonList, Manga[].class); // cria uma lista de objetos com base num lista
             Mangas.addAll(Arrays.asList(mangasArray)); // adiciona os objetos criados a lista de mangas
 
@@ -104,7 +108,9 @@ public class MangaHttp {
             JSONArray jsonArray = new JSONArray(json); // pega a lista de objetos
             String jsonList = jsonArray.toString();    // converte a lista de objeto em string
 
-            Gson gson = new Gson(); // objeto gson para parse
+            Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Manga.class,
+                    new MangaTypeAdapter()).create(); // objeto gson para parse
+
             Manga[] mangasArray = gson.fromJson(jsonList, Manga[].class); // cria uma lista de objetos com base num lista
             Mangas.addAll(Arrays.asList(mangasArray)); // adiciona os objetos criados a lista de mangas
 
@@ -134,7 +140,9 @@ public class MangaHttp {
             //JSONArray jsonArray = new JSONArray(json); // pega a lista de objetos
             //String jsonList = jsonArray.toString();    // converte a lista de objeto em string
 
-            Gson gson = new Gson(); // objeto gson para parse
+            Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Manga.class,
+                    new MangaTypeAdapter()).create(); // objeto gson para parse
+
             manga = gson.fromJson(json, Manga.class); // cria uma lista de objetos com base num lista
 
         }catch (IOException e){

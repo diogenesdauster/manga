@@ -56,7 +56,7 @@ public class MangasMainListAllFragment extends Fragment implements SearchView.On
             @Override
             public void onMangaClick(Manga manga, int position) {
                 Intent it = new Intent(getActivity(), MangaDetailActivity.class);
-                it.putExtra(MangaDetailActivity.EXTRA_MANGAID, manga.getMangaId());
+                it.putExtra(MangaDetailActivity.EXTRA_MANGAID, manga.getHref());
                 startActivity(it);
             }
         });

@@ -36,7 +36,7 @@ public class MangaSearchTask extends AsyncTaskLoader<List<Manga>> {
     @Override
     public List<Manga> loadInBackground() {
         if(query == "ALL") {
-            mangas.addAll(MangaHttp.searchMangas());
+            mangas.addAll(MangaHttp.getListMangas());
         }else{
             mangas.addAll(MangaHttp.searchManga(query));
         }
