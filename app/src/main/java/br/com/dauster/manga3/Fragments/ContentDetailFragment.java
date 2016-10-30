@@ -53,8 +53,10 @@ public class ContentDetailFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Arquivo de Layout
         View view = inflater.inflate(R.layout.fragment_content_detail, container, false);
 
+        // View do Arquivo de layout que serão alimentadas
         mImgCover   = (ImageView) view.findViewById(R.id.imgCover);
         mTextAuthor = (TextView) view.findViewById(R.id.textAuthor);
         mTextStatus = (TextView) view.findViewById(R.id.textStatus);
@@ -62,9 +64,11 @@ public class ContentDetailFragment extends Fragment implements
         mTextLastUpd= (TextView) view.findViewById(R.id.textLastUpd);
         mTextGenre  = (TextView) view.findViewById(R.id.textGenre);
         mTextInfo   = (TextView) view.findViewById(R.id.textInfo);
+
+        // Toolbar da Activity para mudar nome de acordo com o manga
         mToolbar    = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
-        // Inicializamos mMovie (ver onSaveInsatnceState)
+        // Inicializamos mManga (ver onSaveInsatnceState)
         if (savedInstanceState == null){
             // Se não tem um estado anterior, use o que foi passado no método newInstance.
             mManga = (Manga) getArguments().getSerializable(MANGA_INFO);
@@ -74,6 +78,7 @@ public class ContentDetailFragment extends Fragment implements
         }
 
 
+        // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
         mLoaderManager = getLoaderManager();
         Bundle params = new Bundle();
         params.putString(MangaDetailActivity.EXTRA_MANGAID,mManga.getHref());
@@ -91,18 +96,35 @@ public class ContentDetailFragment extends Fragment implements
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        // Salva o Manga em caso de virar a tela , só por segurança
+        // pois o loader vai substituir se a consulta já estiver feita
         outState.putSerializable(MANGA_INFO,mManga);
     }
 
 
     @Override
     public Loader<Manga> onCreateLoader(int id, Bundle args) {
+        // executa o loader
         String s = args != null ? args.getString(MangaDetailActivity.EXTRA_MANGAID) : null;
         return new MangaSearchById(getContext(),s);
     }
 
     @Override
     public void onLoadFinished(Loader<Manga> loader, Manga manga) {
+        // atualiza as View
+        updateUI(manga);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Manga> loader) {
+        // Não implementado
+    }
+
+
+    private void updateUI(Manga manga){
+
+        // Atualiza o manga se o não for null
+
         if(manga != null){
             mManga = manga;
             mTextLastUpd.setText(manga.getLastUpdate());
@@ -118,12 +140,6 @@ public class ContentDetailFragment extends Fragment implements
         }
 
     }
-
-    @Override
-    public void onLoaderReset(Loader<Manga> loader) {
-
-    }
-
 
 
 }

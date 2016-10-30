@@ -15,16 +15,20 @@ import br.com.dauster.manga3.R;
 public class ChapterDetailFragment extends Fragment {
 
 
-    public ChapterDetailFragment() {
-        // Required empty public constructor
-    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chapter_detail, container, false);
+        View view =  inflater.inflate(R.layout.fragment_chapter_detail, container, false);
+
+
+
+
+
+
+        return view;
     }
 
 }
