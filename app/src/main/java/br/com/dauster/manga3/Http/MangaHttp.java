@@ -66,11 +66,16 @@ public class MangaHttp {
             JSONArray jsonArray = new JSONArray(json); // pega a lista de objetos
             String jsonList = jsonArray.toString();    // converte a lista de objeto em string
 
-            Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Manga.class,
+            Gson gson = new GsonBuilder().registerTypeAdapter(Manga.class,
                     new MangaTypeAdapter()).create(); // objeto gson para parse
 
             Manga[] mangasArray = gson.fromJson(jsonList, Manga[].class); // cria uma lista de objetos com base num lista
             Mangas.addAll(Arrays.asList(mangasArray)); // adiciona os objetos criados a lista de mangas
+
+
+
+            //Uri uri = getContentResolver().insert(MoviesProvider.MOVIES_URI, contentValues);
+
 
             /*
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -108,7 +113,7 @@ public class MangaHttp {
             JSONArray jsonArray = new JSONArray(json); // pega a lista de objetos
             String jsonList = jsonArray.toString();    // converte a lista de objeto em string
 
-            Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Manga.class,
+            Gson gson = new GsonBuilder().registerTypeAdapter(Manga.class,
                     new MangaTypeAdapter()).create(); // objeto gson para parse
 
             Manga[] mangasArray = gson.fromJson(jsonList, Manga[].class); // cria uma lista de objetos com base num lista
@@ -140,7 +145,7 @@ public class MangaHttp {
             //JSONArray jsonArray = new JSONArray(json); // pega a lista de objetos
             //String jsonList = jsonArray.toString();    // converte a lista de objeto em string
 
-            Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Manga.class,
+            Gson gson = new GsonBuilder().registerTypeAdapter(Manga.class,
                     new MangaTypeAdapter()).create(); // objeto gson para parse
 
             manga = gson.fromJson(json, Manga.class); // cria uma lista de objetos com base num lista

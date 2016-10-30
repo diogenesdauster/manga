@@ -3,10 +3,10 @@ package br.com.dauster.manga3.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-@SuppressWarnings("unused")
-public class Chapter {
+public class Chapter implements Serializable {
 
     @SerializedName("chapterId")
     private Long mChapterId;

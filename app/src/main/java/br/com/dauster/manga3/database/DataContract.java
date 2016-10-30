@@ -20,7 +20,7 @@ public class DataContract {
     public static final class MangaContract implements BaseColumns {
 
         public static final String ENTITY_NAME = Manga.class.getSimpleName();
-        public static final String COLUMN_MANGAID = "mangaid";
+        public static final String COLUMN_MANGAID = _ID;
         public static final String COLUMN_ARTIST = "artist";
         public static final String COLUMN_AUTHOR = "author";
         public static final String COLUMN_COVER = "cover";
@@ -59,7 +59,7 @@ public class DataContract {
     public static final class ChapterContract implements BaseColumns {
 
         public static final String ENTITY_NAME = Chapter.class.getSimpleName();
-        public static final String COLUMN_CHAPTERID = "chapterid";
+        public static final String COLUMN_CHAPTERID = _ID;
         public static final String COLUMN_MANGAID = "mangaid";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_LASTUPDATE = "lastupdate";
@@ -70,7 +70,7 @@ public class DataContract {
     public static final class PageContract implements BaseColumns {
 
         public static final String ENTITY_NAME = Page.class.getSimpleName();
-        public static final String COLUMN_PAGEID = "pageid";
+        public static final String COLUMN_PAGEID = _ID;
         public static final String COLUMN_CHAPTERID = "chapterid";
         public static final String COLUMN_URL = "url";
         public static final String URI_PATH = ENTITY_NAME.toLowerCase();

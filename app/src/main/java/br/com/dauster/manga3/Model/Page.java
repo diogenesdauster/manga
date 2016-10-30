@@ -3,7 +3,10 @@ package br.com.dauster.manga3.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Page {
+import java.io.Serializable;
+
+
+public class Page implements Serializable {
 
     private Long mChapterId;
     @SerializedName("pageId")

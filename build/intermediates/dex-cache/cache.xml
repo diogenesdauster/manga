@@ -21,6 +21,33 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="625b0b3f49a668e4c042164ce5eaf31eceacc694">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_324a1a87d8c254ebf7f21219c66abd740144ae3a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/dauster/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_7986c7cebc37e50e6d78dea6d3e4c10842f0ce9d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.1_3cce52141de3f6ef2e155ef1c2fc204c2d676285/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
@@ -57,6 +84,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_b582de0782cc69852723b6bb6f84bc9351110389/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -72,78 +108,6 @@
         revision="24.0.2"
         sha1="867dad63c33388ff8c7644b236579355036d075f">
         <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_f9007e45d807e1cfeb599310230c3fd19b486f45/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_bb922fe5ac54fa5e6a4d7c9ca02cdf7f9ec2b7c5/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.1_1caa5f5e012fb3f6c501a6b27979cc8a999b0486/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_5f1f024fff5a48691802b0c21da3e2f245876bf7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_ab2248c6f020e0423bac48f985cedc350771bb08/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="891bd83796f3422c225d688d9cfe7235343dc72c">
-        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_324a1a87d8c254ebf7f21219c66abd740144ae3a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/dauster/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_7986c7cebc37e50e6d78dea6d3e4c10842f0ce9d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.1_3cce52141de3f6ef2e155ef1c2fc204c2d676285/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_b582de0782cc69852723b6bb6f84bc9351110389/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -196,8 +160,17 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="2c8d106ce33f437403305cca59fa5e92d6c3a762">
+        sha1="4a74dabd004c5cd8ef47c84ff68453f22b08b534">
         <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_9a863aa8f7180efcf336e6e2101b705cb43c05c9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_bb922fe5ac54fa5e6a4d7c9ca02cdf7f9ec2b7c5/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -210,12 +183,48 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.1_1caa5f5e012fb3f6c501a6b27979cc8a999b0486/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_5f1f024fff5a48691802b0c21da3e2f245876bf7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_ab2248c6f020e0423bac48f985cedc350771bb08/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/dauster/Developer/Github/Manga/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="c5e6490573cd2cc8018417f60ddd251138b6ed61">
         <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-24.2.1_b0f08d70305b8cb24e68539d5d503951d422465f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/dauster/.gradle/caches/modules-2/files-2.1/org.parceler/parceler-api/1.1.6/2a06b6b1ecf5dadee8a874dfb51ad018fde3e6c5/parceler-api-1.1.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="2a06b6b1ecf5dadee8a874dfb51ad018fde3e6c5">
+        <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/parceler-api-1.1.6_2e8a8d4e48e7ce0ede30d36e72111d028d59c53d/classes.dex" />
     </item>
     <item
         is-multidex="true"

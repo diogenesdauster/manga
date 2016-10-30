@@ -90,6 +90,17 @@ public class MangaTypeAdapter extends TypeAdapter<Manga> {
                     in.endArray();
                     mManga.setAuthor(mAuthors);
                     break;
+                case "chapters":
+                    in.beginArray();
+                    while (in.hasNext()) {
+                        mChapters.add(readChapter(in));
+                    }
+                    in.endArray();
+                    mManga.setChapters(mChapters);
+                    break;
+                case "cover":
+                    mManga.setCover(in.nextString());
+                    break;
                 case "genres":
                     in.beginArray();
                     while (in.hasNext()) {
@@ -97,17 +108,6 @@ public class MangaTypeAdapter extends TypeAdapter<Manga> {
                     }
                     in.endArray();
                     mManga.setGenres(mGenres);
-                    break;
-                case "chapters":
-                    in.beginArray();
-                    while (in.hasNext()) {
-                        mChapters.add(readChapter(in));
-                    }
-                    in.endArray();
-                    mManga.setAuthor(mAuthors);
-                    break;
-                case "cover":
-                    mManga.setCover(in.nextString());
                     break;
                 case "href":
                     mManga.setHref(in.nextString());

@@ -3,9 +3,10 @@ package br.com.dauster.manga3.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Manga {
+public class Manga implements Serializable {
 
     private Long Id;
     @SerializedName("artist")
