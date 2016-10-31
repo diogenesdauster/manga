@@ -27,15 +27,16 @@ public class MangaIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null && intent.getExtras().getBoolean(SINCRONIZAR)) {
 
-            Intent it = new Intent(SINCRONIZAR);
-            bcM = LocalBroadcastManager.getInstance(this);
-            List<Manga> mangaList = MangaHttp.getListMangas();
+            Intent it = new Intent(SINCRONIZAR); // cria uma intent para sincronizar
+            bcM = LocalBroadcastManager.getInstance(this); // cria broadcast para enviar quando terminar
+            List<Manga> mangaList = MangaHttp.getListMangas(); // efetua a requisição no servidor
 
             if (mangaList.size() <= 0 ){
-                sendMessage(false);
+                sendMessage(false); // enviar broadcast dizendo que falhou
                 return;
             }
 
+            // faz a inserção de registro no banco de dados
             handleActionManga(mangaList);
 
         }
@@ -55,10 +56,11 @@ public class MangaIntentService extends IntentService {
 
         }
 
-        sendMessage(true);
+        sendMessage(true);// enviar broadcast dizendo que funcinou
 
     }
 
+    // funcao que cria uma mensagem de broadcast
     private void sendMessage(Boolean message){
         Intent it = new Intent(SINCRONIZAR);
         bcM = LocalBroadcastManager.getInstance(this);

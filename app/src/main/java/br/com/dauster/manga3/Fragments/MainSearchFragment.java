@@ -101,7 +101,7 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (args != null){
             return new CursorLoader(getActivity(),
-                    DataContract.MangaContract.buildUri(DataContract.MangaContract.CONTENT_URI_NAME,
+                    DataContract.buildUri(DataContract.MangaContract.CONTENT_URI_NAME,
                             args.getString(MANGA_ARGS)),
                     DataContract.MangaContract.COLUMNS_LIST_MAIN, null, null, null);
         }

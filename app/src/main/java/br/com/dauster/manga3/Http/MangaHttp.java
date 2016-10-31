@@ -73,22 +73,6 @@ public class MangaHttp {
             Mangas.addAll(Arrays.asList(mangasArray)); // adiciona os objetos criados a lista de mangas
 
 
-
-            //Uri uri = getContentResolver().insert(MoviesProvider.MOVIES_URI, contentValues);
-
-
-            /*
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonManga = jsonArray.getJSONObject(i);
-                Manga m = new Manga();
-                m.setMangaId(jsonManga.optString("mangaId"));
-                m.setName(jsonManga.optString("name"));
-                m.setCover(jsonManga.optString("cover"));
-                Mangas.add(m);
-            }
-            */
-
-
         }catch (IOException e){
             e.printStackTrace();
         } catch (JSONException e) {

@@ -18,6 +18,10 @@ import static br.com.dauster.manga3.database.DataContract.*;
 
 public class DataProvider extends ContentProvider {
 
+
+    // CONSTANTE PARA MONTAR O PROVIDER
+    // BOAS PRATICAS SEMPRE DIVIDIR POR FAIXAS
+    // EX: 100 , 200 , 300
     private static final String NUMBER = "/#";
     private static final String TEXT = "/*";
 
@@ -28,20 +32,20 @@ public class DataProvider extends ContentProvider {
     private static final int CHAPTER = 200;
     private static final int CHAPTER_ID = 201;
     private static final int CHAPTER_MANGA = 202;
+
     private static final int PAGE = 300;
     private static final int PAGE_ID = 301;
     private static final int PAGE_CHAPTER = 302;
 
     private static final UriMatcher mUriMatcher = buildUriMatcher();
-    //    private static final SQLiteQueryBuilder sComicQueryBuilder = buildComicQueryBuilder();
-//    private static final SQLiteQueryBuilder sSeriesQueryBuilder = buildSeriesQueryBuilder();
-//    private static final SQLiteQueryBuilder sStoriesQueryBuilder = buildStoriesQueryBuilder();
     private DataHelper mDataHelper;
 
+    // Criando o Matcher do ContentProvider
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = CONTENT_AUTHORITY;
 
+        // Informa ao ContentProvider que ele só aceitar essas Urls
         matcher.addURI(authority, MangaContract.URI_PATH, MANGA);
         matcher.addURI(authority, MangaContract.URI_PATH + TEXT, MANGA_ID);
         matcher.addURI(authority, MangaContract.URI_PATH_NAME + TEXT, MANGA_SEARCH);
@@ -101,43 +105,26 @@ public class DataProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         int uriType = mUriMatcher.match(uri);
 
+        // Verifica se a Uri de maatch
         if (uriType != -1) {
-            SQLiteDatabase db = mDataHelper.getWritableDatabase();
-            long id = db.insert(getEntityName(uri), null, values);
-            db.close();
+            SQLiteDatabase db = mDataHelper.getWritableDatabase(); // abre conexão com o banco
+            long id = db.insert(getEntityName(uri), null, values); // inclui o registro
+            db.close(); // fecha a conexão
             // Se der erro na inclusão o id retornado é -1,
             // então levantamos a exceção para ser tratada na tela.
             if (id == -1) {
                 throw new RuntimeException("Error inserting moving.");
             }
+            // Caso a operação no banco ocorra sem problemas, notificamos a Uri
+            // para que a listagem de favoritos seja atualizada.
             notifyChanges(uri);
-            return ContentUris.withAppendedId(uri, id);
+            return ContentUris.withAppendedId(uri, id); // retorna o caminho do novo registro incluido
         } else {
             throw new IllegalArgumentException("Invalid Uri");
         }
 
     }
 
-//    @Override
-//    public int bulkInsert(Uri uri, ContentValues[] values) {
-//        String entityName = getEntityName(uri);
-//        SQLiteDatabase db = mDataHelper.getWritableDatabase();
-//        db.beginTransaction();
-//        int returnCount = 0;
-//        try {
-//            for (ContentValues value : values) {
-//                long id = db.insert(entityName, null, value);
-//                if (id > 0) {
-//                    returnCount++;
-//                }
-//            }
-//            db.setTransactionSuccessful();
-//        } finally {
-//            db.endTransaction();
-//        }
-//        notifyChanges(uri);
-//        return returnCount;
-//    }
 
     @Override
     public boolean onCreate() {

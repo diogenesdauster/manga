@@ -5,13 +5,10 @@
     tools:context="br.com.dauster.manga3.Fragments.ChapterDetailFragment">
 
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/listDetailChapter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listDetailChapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
 </FrameLayout>

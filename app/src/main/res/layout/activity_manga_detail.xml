@@ -34,7 +34,7 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <include layout="@layout/content_manga_detail" />
+    <include layout="@layout/content_detail" />
 
 
 
