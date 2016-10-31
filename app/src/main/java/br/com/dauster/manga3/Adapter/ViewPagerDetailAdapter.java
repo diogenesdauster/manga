@@ -12,20 +12,10 @@ import br.com.dauster.manga3.Model.Manga;
 public class ViewPagerDetailAdapter extends FragmentPagerAdapter {
 
     Manga mManga;
-    FragmentManager mFrag;
 
     public ViewPagerDetailAdapter(FragmentManager fm, Manga manga) {
         super(fm);
         mManga = manga;
-        mFrag = fm;
-    }
-
-    public void setManga(Manga manga){
-        mManga = manga;
-    }
-
-    public FragmentManager getFrag(){
-        return  mFrag;
     }
 
 

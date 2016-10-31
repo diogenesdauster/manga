@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import br.com.dauster.manga3.Loader.MangaSearchById;
-import br.com.dauster.manga3.MangaDetailActivity;
+import br.com.dauster.manga3.DetailActivity;
 import br.com.dauster.manga3.Model.Manga;
 import br.com.dauster.manga3.R;
 import br.com.dauster.manga3.database.DataUtil;
@@ -24,8 +24,8 @@ import br.com.dauster.manga3.database.DataUtil;
 public class ContentDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Manga>{
 
-    private static final int LOADER_ID_DETAIL = 2;
-    private static final String MANGA_INFO = "info" ;
+    public static final int LOADER_ID_DETAIL = 2;
+    public static final String MANGA_INFO = "info" ;
 
     LoaderManager mLoaderManager;
     ImageView mImgCover;
@@ -81,7 +81,7 @@ public class ContentDetailFragment extends Fragment implements
         // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
         mLoaderManager = getLoaderManager();
         Bundle params = new Bundle();
-        params.putString(MangaDetailActivity.EXTRA_MANGAID,mManga.getHref());
+        params.putString(DetailActivity.EXTRA_MANGAID,mManga.getHref());
         mLoaderManager.initLoader(LOADER_ID_DETAIL, params, this);
 
 
@@ -105,7 +105,7 @@ public class ContentDetailFragment extends Fragment implements
     @Override
     public Loader<Manga> onCreateLoader(int id, Bundle args) {
         // executa o loader
-        String s = args != null ? args.getString(MangaDetailActivity.EXTRA_MANGAID) : null;
+        String s = args != null ? args.getString(DetailActivity.EXTRA_MANGAID) : null;
         return new MangaSearchById(getContext(),s);
     }
 
@@ -126,6 +126,7 @@ public class ContentDetailFragment extends Fragment implements
         // Atualiza o manga se o não for null
 
         if(manga != null){
+
             mManga = manga;
             mTextLastUpd.setText(manga.getLastUpdate());
             mTextGenre.setText(DataUtil.listToString(manga.getGenres()));

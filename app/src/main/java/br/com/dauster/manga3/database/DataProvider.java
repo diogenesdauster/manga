@@ -24,6 +24,7 @@ public class DataProvider extends ContentProvider {
     private static final int MANGA = 100;
     private static final int MANGA_ID = 101;
     private static final int MANGA_SEARCH = 102;
+
     private static final int CHAPTER = 200;
     private static final int CHAPTER_ID = 201;
     private static final int CHAPTER_MANGA = 202;
@@ -42,11 +43,13 @@ public class DataProvider extends ContentProvider {
         final String authority = CONTENT_AUTHORITY;
 
         matcher.addURI(authority, MangaContract.URI_PATH, MANGA);
-        matcher.addURI(authority, MangaContract.URI_PATH + NUMBER, MANGA_ID);
-        matcher.addURI(authority, MangaContract.URI_PATH + TEXT, MANGA_SEARCH);
+        matcher.addURI(authority, MangaContract.URI_PATH + TEXT, MANGA_ID);
+        matcher.addURI(authority, MangaContract.URI_PATH_NAME + TEXT, MANGA_SEARCH);
+
         matcher.addURI(authority, ChapterContract.URI_PATH, CHAPTER);
         matcher.addURI(authority, ChapterContract.URI_PATH + NUMBER, CHAPTER_ID);
         matcher.addURI(authority, ChapterContract.URI_PATH_MANGA + NUMBER, CHAPTER_MANGA);
+
         matcher.addURI(authority, PageContract.URI_PATH, PAGE);
         matcher.addURI(authority, PageContract.URI_PATH + NUMBER, PAGE_ID);
         matcher.addURI(authority, PageContract.URI_PATH_CHAPTER + NUMBER, PAGE_CHAPTER);
@@ -115,26 +118,26 @@ public class DataProvider extends ContentProvider {
 
     }
 
-    @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
-        String entityName = getEntityName(uri);
-        SQLiteDatabase db = mDataHelper.getWritableDatabase();
-        db.beginTransaction();
-        int returnCount = 0;
-        try {
-            for (ContentValues value : values) {
-                long id = db.insert(entityName, null, value);
-                if (id > 0) {
-                    returnCount++;
-                }
-            }
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-        notifyChanges(uri);
-        return returnCount;
-    }
+//    @Override
+//    public int bulkInsert(Uri uri, ContentValues[] values) {
+//        String entityName = getEntityName(uri);
+//        SQLiteDatabase db = mDataHelper.getWritableDatabase();
+//        db.beginTransaction();
+//        int returnCount = 0;
+//        try {
+//            for (ContentValues value : values) {
+//                long id = db.insert(entityName, null, value);
+//                if (id > 0) {
+//                    returnCount++;
+//                }
+//            }
+//            db.setTransactionSuccessful();
+//        } finally {
+//            db.endTransaction();
+//        }
+//        notifyChanges(uri);
+//        return returnCount;
+//    }
 
     @Override
     public boolean onCreate() {
@@ -146,8 +149,38 @@ public class DataProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        // TODO: Implement this to handle query requests from clients.
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        int uriType = mUriMatcher.match(uri);
+        SQLiteDatabase db = mDataHelper.getReadableDatabase();
+        Cursor cursor;
+
+        switch (uriType) {
+
+            case MANGA:
+                cursor = db.query(MangaContract.ENTITY_NAME,
+                        projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case MANGA_SEARCH:
+                String query = uri.getLastPathSegment();
+                cursor = db.query(MangaContract.ENTITY_NAME,
+                        projection, MangaContract.COLUMN_NAME + " LIKE ?", new String[]{query + "%"}
+                        , null, null,
+                        sortOrder);
+
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid Uri");
+
+
+        }
+
+        if (getContext() != null) {
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        }
+
+        return cursor;
+
+
     }
 
     @Override

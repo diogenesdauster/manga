@@ -13,7 +13,7 @@ import br.com.dauster.manga3.Model.Chapter;
 import br.com.dauster.manga3.R;
 
 
-class ChapterDetailAdapter extends RecyclerView.Adapter<ChapterDetailAdapter.VH> {
+public class ChapterDetailAdapter extends RecyclerView.Adapter<ChapterDetailAdapter.VH> {
 
     Context mContext;
     List <Chapter> mChapters;

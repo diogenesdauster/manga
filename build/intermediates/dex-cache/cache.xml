@@ -25,7 +25,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="625b0b3f49a668e4c042164ce5eaf31eceacc694">
+        sha1="acf7e375180463b465f6f1f219a50839f8e853c6">
         <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_324a1a87d8c254ebf7f21219c66abd740144ae3a/classes.dex" />
     </item>
     <item
@@ -160,7 +160,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="4a74dabd004c5cd8ef47c84ff68453f22b08b534">
+        sha1="a47c27371563c6f228b8bc736942eabbdd4a31e7">
         <dex dex="/Users/dauster/Developer/Github/Manga/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_9a863aa8f7180efcf336e6e2101b705cb43c05c9/classes.dex" />
     </item>
     <item

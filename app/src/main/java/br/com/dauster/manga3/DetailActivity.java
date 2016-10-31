@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import br.com.dauster.manga3.Adapter.ViewPagerDetailAdapter;
 import br.com.dauster.manga3.Model.Manga;
 
-public class MangaDetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_MANGAID ="mangaId" ;
 

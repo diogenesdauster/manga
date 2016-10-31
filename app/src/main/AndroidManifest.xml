@@ -9,7 +9,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
@@ -20,16 +20,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MangaDetailActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".DetailActivity"
             android:label="@string/title_activity_manga_detail"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".database.DataProvider"
             android:authorities="br.com.dauster.manga"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
+
+        <service
+            android:name=".Http.MangaIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

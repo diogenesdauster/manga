@@ -1,7 +1,6 @@
 package br.com.dauster.manga3.database;
 
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -20,7 +19,7 @@ public class DataContract {
     public static final class MangaContract implements BaseColumns {
 
         public static final String ENTITY_NAME = Manga.class.getSimpleName();
-        public static final String COLUMN_MANGAID = _ID;
+        public static final String COLUMN_HREF = "href";
         public static final String COLUMN_ARTIST = "artist";
         public static final String COLUMN_AUTHOR = "author";
         public static final String COLUMN_COVER = "cover";
@@ -30,28 +29,28 @@ public class DataContract {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_STATUS = "status";
         public static final String COLUMN_YEAROFRELEASE = "yearofrelease";
-        public static final String URI_PATH = ENTITY_NAME.toLowerCase();
+        public static final String URI_PATH      = ENTITY_NAME.toLowerCase();
+        public static final String URI_PATH_NAME = URI_PATH +"/"+COLUMN_NAME;
 
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendEncodedPath(URI_PATH).build();
 
-        public static Uri buildUri(long id) {
-            return ContentUris.appendId(CONTENT_URI.buildUpon(), id).build();
+        public static final Uri CONTENT_URI_NAME =
+                BASE_CONTENT_URI.buildUpon().appendEncodedPath(URI_PATH).
+                        appendEncodedPath(COLUMN_NAME).build();
+
+
+        public static Uri buildUri(Uri uri,String value) {
+            return  uri.buildUpon().appendEncodedPath(value).build();
         }
 
-//        public static Uri buildUri(int offset) {
-//            return CONTENT_URI.buildUpon()
-//                    .appendQueryParameter(QUERY_PARAMETER_OFFSET, String.valueOf(offset))
-//                    .build();
-//        }
-//
-//        public static Uri buildUri(int offset, int limit) {
-//            return CONTENT_URI.buildUpon()
-//                    .appendQueryParameter(QUERY_PARAMETER_OFFSET, String.valueOf(offset))
-//                    .appendQueryParameter(QUERY_PARAMETER_LIMIT, String.valueOf(limit))
-//                    .build();
-//        }
 
+        // Colunas utilizadas pelo adapter do fragment de favoritos
+        public static String[] COLUMNS_LIST_MAIN = new String[]{
+                COLUMN_HREF,
+                COLUMN_NAME,
+                COLUMN_COVER
+        };
 
     }
 
@@ -59,7 +58,7 @@ public class DataContract {
     public static final class ChapterContract implements BaseColumns {
 
         public static final String ENTITY_NAME = Chapter.class.getSimpleName();
-        public static final String COLUMN_CHAPTERID = _ID;
+        public static final String COLUMN_CHAPTERID = "chapterid";
         public static final String COLUMN_MANGAID = "mangaid";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_LASTUPDATE = "lastupdate";
@@ -70,7 +69,7 @@ public class DataContract {
     public static final class PageContract implements BaseColumns {
 
         public static final String ENTITY_NAME = Page.class.getSimpleName();
-        public static final String COLUMN_PAGEID = _ID;
+        public static final String COLUMN_PAGEID = "pageid";
         public static final String COLUMN_CHAPTERID = "chapterid";
         public static final String COLUMN_URL = "url";
         public static final String URI_PATH = ENTITY_NAME.toLowerCase();

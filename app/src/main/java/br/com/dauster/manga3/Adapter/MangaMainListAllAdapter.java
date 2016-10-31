@@ -1,6 +1,7 @@
 package br.com.dauster.manga3.Adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,20 +12,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.List;
-
-import br.com.dauster.manga3.Model.Manga;
 import br.com.dauster.manga3.R;
+import br.com.dauster.manga3.database.DataContract;
 
 public class MangaMainListAllAdapter extends RecyclerView.Adapter<MangaMainListAllAdapter.VH> {
 
     Context mContext;
-    List<Manga> mMangas;
     OnMangaClickListener mMangaClickListener;
+    Cursor mCursor;
 
-    public MangaMainListAllAdapter(Context mContext, List<Manga> mMangas) {
+
+    public MangaMainListAllAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mMangas = mMangas;
     }
 
     @Override
@@ -38,7 +37,8 @@ public class MangaMainListAllAdapter extends RecyclerView.Adapter<MangaMainListA
                 @Override
                 public void onClick(View view) {
                     int position = viewHolder.getAdapterPosition();
-                    mMangaClickListener.onMangaClick(mMangas.get(position),position);
+                    mCursor.moveToPosition(position);
+                    mMangaClickListener.onMangaClick(mCursor,position);
                 }
             });
         }
@@ -46,12 +46,39 @@ public class MangaMainListAllAdapter extends RecyclerView.Adapter<MangaMainListA
         return viewHolder;
     }
 
+
+    public Cursor getCursor() {
+        return mCursor;
+    }
+
+    public void swapCursor(Cursor mCursor) {
+        this.mCursor = mCursor;
+        notifyDataSetChanged();
+    }
+
+    public void setMangaClickListener(OnMangaClickListener mMangaClickListener) {
+        this.mMangaClickListener = mMangaClickListener;
+    }
+
+
     @Override
     public void onBindViewHolder(final VH holder, int position) {
-        Manga manga = mMangas.get(position);
-        Glide.with(mContext).load(manga.getCover()).placeholder(R.drawable.ic_do_not_disturb_black_200dp).into(holder.mImgCover);
-        //holder.mMangaNameHolder.setBackgroundColor(R.);
-        holder.mTxtTitle.setText(manga.getName());
+        //Manga manga = mMangas.get(position);
+
+        mCursor.moveToPosition(position);
+        String cover = mCursor.getString(mCursor
+                .getColumnIndex(DataContract.MangaContract.COLUMN_COVER));
+        String name  = mCursor.getString(mCursor
+                .getColumnIndex(DataContract.MangaContract.COLUMN_NAME));
+
+        Glide.with(mContext).load(cover)
+                .placeholder(R.drawable.ic_do_not_disturb_black_200dp)
+                .into(holder.mImgCover);
+        holder.mTxtTitle.setText(name);
+
+
+//        Glide.with(mContext).load(manga.getCover()).placeholder(R.drawable.ic_do_not_disturb_black_200dp).into(holder.mImgCover);
+//        holder.mTxtTitle.setText(manga.getName());
 /*
         Glide.with(mContext).load(manga.getCover()).asBitmap().centerCrop().into(new SimpleTarget<Bitmap>() {
             @Override
@@ -73,8 +100,10 @@ public class MangaMainListAllAdapter extends RecyclerView.Adapter<MangaMainListA
 
     @Override
     public int getItemCount() {
-        return mMangas.size();
+        return (mCursor != null) ? mCursor.getCount() : 0;
     }
+
+
 
     public static class VH extends RecyclerView.ViewHolder {
 
@@ -91,10 +120,7 @@ public class MangaMainListAllAdapter extends RecyclerView.Adapter<MangaMainListA
     }
 
     public static interface OnMangaClickListener {
-        void onMangaClick(Manga manga,int position);
+        void onMangaClick(Cursor cursor,int position);
     }
 
-    public void setmMangaClickListener(OnMangaClickListener mMangaClickListener) {
-        this.mMangaClickListener = mMangaClickListener;
-    }
 }

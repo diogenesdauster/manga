@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.dauster.manga3.Fragments.MangasMainListAllFragment">
+    tools:context="br.com.dauster.manga3.Fragments.MainListFragment">
 
 
 
@@ -11,6 +11,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <include layout="@layout/bottomnavegation"/>
 
 </RelativeLayout>

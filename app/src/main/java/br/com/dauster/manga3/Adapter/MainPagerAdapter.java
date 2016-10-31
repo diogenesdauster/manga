@@ -4,12 +4,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import br.com.dauster.manga3.Fragments.MangasMainListAllFragment;
+import br.com.dauster.manga3.Fragments.MainListFragment;
+import br.com.dauster.manga3.Fragments.MainSearchFragment;
 
 
-public class ViewPagerBottomNavigationAdapter extends FragmentPagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    public ViewPagerBottomNavigationAdapter(FragmentManager fm) {
+    public MainPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -21,8 +22,6 @@ public class ViewPagerBottomNavigationAdapter extends FragmentPagerAdapter {
                 return "Home";
             case 1:
                 return "Search";
-            case 2:
-                return "Favorite";
             default:
                 return "";
         }
@@ -32,23 +31,17 @@ public class ViewPagerBottomNavigationAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                MangasMainListAllFragment frag = new MangasMainListAllFragment();
-                return  frag;
+                return new MainListFragment();
             case 1:
-                frag = new MangasMainListAllFragment();
-                return  frag;
-            case 2:
-                frag = new MangasMainListAllFragment();
-                return  frag;
+                return new MainSearchFragment();
             default:
-                frag = new MangasMainListAllFragment();
-                return  frag;
+                return new MainListFragment();
         }
 
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }

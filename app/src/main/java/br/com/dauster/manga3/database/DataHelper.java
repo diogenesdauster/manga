@@ -13,7 +13,7 @@ import br.com.dauster.manga3.database.DataContract.PageContract;
 public class DataHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "mangas.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DataHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,7 +25,8 @@ public class DataHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_MANGA_TABLE = "CREATE TABLE " +
                 MangaContract.ENTITY_NAME + " (" +
-                MangaContract.COLUMN_MANGAID + " TEXT NOT NULL, " +
+                MangaContract._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                MangaContract.COLUMN_HREF + " TEXT NOT NULL, " +
                 MangaContract.COLUMN_ARTIST + " TEXT , " +
                 MangaContract.COLUMN_AUTHOR + " TEXT , " +
                 MangaContract.COLUMN_COVER + " TEXT , " +
@@ -35,31 +36,33 @@ public class DataHelper extends SQLiteOpenHelper {
                 MangaContract.COLUMN_NAME + " TEXT NOT NULL, " +
                 MangaContract.COLUMN_STATUS + " TEXT , " +
                 MangaContract.COLUMN_YEAROFRELEASE + " INTEGER, "+
-                "PRIMARY KEY (" + MangaContract.COLUMN_MANGAID + ") ON CONFLICT REPLACE);";
+                "UNIQUE (" + MangaContract.COLUMN_HREF + ") ON CONFLICT REPLACE);";
 
 
         final String SQL_CREATE_CHAPTER_TABLE = "CREATE TABLE " +
                 ChapterContract.ENTITY_NAME + " (" +
-                ChapterContract.COLUMN_CHAPTERID + " INTEGER PRIMARY KEY , " +
+                ChapterContract._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ChapterContract.COLUMN_CHAPTERID + " INTEGER NOT NULL , " +
                 ChapterContract.COLUMN_MANGAID + " TEXT NOT NULL, " +
                 ChapterContract.COLUMN_NAME + " TEXT NOT NULL, " +
                 ChapterContract.COLUMN_LASTUPDATE + " TEXT , " +
                 "UNIQUE (" +
                 ChapterContract.COLUMN_CHAPTERID + ", " +
-                ChapterContract.COLUMN_MANGAID + ", " +
+                ChapterContract.COLUMN_MANGAID +
                 ") ON CONFLICT REPLACE, " +
                 "FOREIGN KEY (" + ChapterContract.COLUMN_MANGAID + ") REFERENCES " +
-                MangaContract.ENTITY_NAME + " (" + MangaContract.COLUMN_MANGAID + "));";
+                MangaContract.ENTITY_NAME + " (" + MangaContract.COLUMN_HREF + "));";
 
 
         final String SQL_CREATE_PAGE_TABLE = "CREATE TABLE " +
                 PageContract.ENTITY_NAME + " (" +
-                PageContract.COLUMN_PAGEID + " INTEGER PRIMARY KEY , " +
+                PageContract._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                PageContract.COLUMN_PAGEID + " INTEGER NOT NULL , " +
                 PageContract.COLUMN_CHAPTERID + " INTEGER NOT NULL, " +
                 PageContract.COLUMN_URL + " TEXT NOT NULL ,"+
                 "UNIQUE (" +
                 PageContract.COLUMN_PAGEID + ", " +
-                PageContract.COLUMN_CHAPTERID + ", " +
+                PageContract.COLUMN_CHAPTERID +
                 ") ON CONFLICT REPLACE, " +
                 "FOREIGN KEY (" + PageContract.COLUMN_PAGEID + ") REFERENCES " +
                 ChapterContract.ENTITY_NAME + " (" + ChapterContract.COLUMN_CHAPTERID + "));";
