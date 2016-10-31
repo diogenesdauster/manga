@@ -10,6 +10,7 @@ import br.com.dauster.manga3.Adapter.MainPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

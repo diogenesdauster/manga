@@ -145,7 +145,7 @@ public class DataProvider extends ContentProvider {
 
             case MANGA:
                 cursor = db.query(MangaContract.ENTITY_NAME,
-                        projection, selection, selectionArgs, null, null, sortOrder);
+                        projection, selection, selectionArgs, null, null, sortOrder,"100");
                 break;
             case MANGA_SEARCH:
                 String query = uri.getLastPathSegment();

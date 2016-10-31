@@ -95,10 +95,8 @@ public class MainListFragment extends Fragment implements
 
 
     public void sincronizar(){
-
-        Bundle params = new Bundle();
-        params.putString("TESTE", "teste");
-        mLoaderManager.restartLoader(LOADER_ID,params,this);
+        mLoaderManager.destroyLoader(LOADER_ID);
+        mLoaderManager.restartLoader(LOADER_ID,new Bundle(),this);
     }
 
 
