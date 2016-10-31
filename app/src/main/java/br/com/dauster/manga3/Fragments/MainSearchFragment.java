@@ -86,7 +86,8 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
     public boolean onQueryTextSubmit(String query) {
         Bundle params = new Bundle();
         params.putString(MANGA_ARGS, query);
-        mLoaderManager.restartLoader(LOADER_ID, params, this);
+        mLoaderManager.destroyLoader(LOADER_ID);
+        mLoaderManager.restartLoader(LOADER_ID,new Bundle(),this);
         return false;
     }
 

@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import br.com.dauster.manga3.Adapter.MangaMainListAllAdapter;
 import br.com.dauster.manga3.DetailActivity;
@@ -32,6 +31,7 @@ public class MainListFragment extends Fragment implements
 
     private static final int LOADER_ID = 1 ;
 
+    Boolean mSync = true;
     RecyclerView mRecyclerView;
     MangaMainListAllAdapter mAdapter;
     LoaderManager mLoaderManager;
@@ -39,7 +39,6 @@ public class MainListFragment extends Fragment implements
         @Override
         public void onReceive(Context context, Intent intent) {
             sincronizar();
-            Toast.makeText(getActivity(),"ACABOU", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -49,14 +48,12 @@ public class MainListFragment extends Fragment implements
         // Inflate the layout for this fragment
 
 
-        if( savedInstanceState == null) {
+
+        if(mSync) {
             IntentFilter filter = new IntentFilter(MangaIntentService.SINCRONIZAR);
             LocalBroadcastManager.getInstance(getActivity()).
                     registerReceiver(mServiceReceiver, filter);
-
-            Intent it = new Intent(getActivity(), MangaIntentService.class);
-            it.putExtra(MangaIntentService.SINCRONIZAR,true);
-            getActivity().startService(it);
+            mSync = false;
         }
 
         View view = inflater.inflate(R.layout.fragment_mangas_list, container, false);

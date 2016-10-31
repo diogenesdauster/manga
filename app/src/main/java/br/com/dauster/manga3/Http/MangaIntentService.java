@@ -3,7 +3,6 @@ package br.com.dauster.manga3.Http;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.List;
@@ -28,11 +27,11 @@ public class MangaIntentService extends IntentService {
         if (intent != null && intent.getExtras().getBoolean(SINCRONIZAR)) {
 
 
-            Cursor cursor = getBaseContext().getContentResolver().query(
-                    DataContract.MangaContract.CONTENT_URI,
-                    DataContract.MangaContract.COLUMNS_LIST_MAIN, null, null, null);
+//            Cursor cursor = getBaseContext().getContentResolver().query(
+//                    DataContract.MangaContract.CONTENT_URI,
+//                    DataContract.MangaContract.COLUMNS_LIST_MAIN, null, null, null);
 
-            if (cursor.getCount() == 0) {
+//            if (cursor.getCount() == 0) {
 
                 Intent it = new Intent(SINCRONIZAR); // cria uma intent para sincronizar
                 bcM = LocalBroadcastManager.getInstance(this); // cria broadcast para enviar quando terminar
@@ -46,8 +45,10 @@ public class MangaIntentService extends IntentService {
                 // faz a inserção de registro no banco de dados
                 handleActionManga(mangaList);
 
+            }else{
+                sendMessage(true);// enviar broadcast dizendo que funcinou
             }
-        }
+//        }
     }
 
     private void handleActionManga(List<Manga> mangas) {
