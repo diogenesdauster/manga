@@ -164,8 +164,11 @@ public class DataUtil {
         );
         boolean isSave = false;
         if (cursor != null) {
-            isSave = !cursor.getString(cursor.getColumnIndex(
-                    DataContract.MangaContract.COLUMN_INFO)).isEmpty();
+            isSave = cursor.getCount() > 0;
+            if(isSave) {
+                isSave = !cursor.getString(cursor.getColumnIndex(
+                        DataContract.MangaContract.COLUMN_INFO)).isEmpty();
+            }
             cursor.close();
         }
         return isSave;

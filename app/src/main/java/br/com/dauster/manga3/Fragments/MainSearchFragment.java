@@ -94,18 +94,9 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
     }
 
 
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-        String query;
-
-        if(args == null){
-            query = "*";
-        }else {
-            query = args.getString(MANGA_ARGS);
-        }
-
+        String query = (args != null) ? args.getString(MANGA_ARGS) : "*";
             return new CursorLoader(getActivity(),
                     DataContract.buildUri(DataContract.MangaContract.CONTENT_URI_NAME,
                             query),

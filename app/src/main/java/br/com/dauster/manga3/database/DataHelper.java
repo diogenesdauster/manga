@@ -3,7 +3,6 @@ package br.com.dauster.manga3.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
 
 import br.com.dauster.manga3.database.DataContract.ChapterContract;
 import br.com.dauster.manga3.database.DataContract.MangaContract;
@@ -13,7 +12,7 @@ import br.com.dauster.manga3.database.DataContract.PageContract;
 public class DataHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "mangas.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 9;
 
     public DataHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,29 +39,27 @@ public class DataHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_CHAPTER_TABLE = "CREATE TABLE " +
                 ChapterContract.ENTITY_NAME + " (" +
-                ChapterContract.COLUMN_CHAPTERID + " INTEGER PRIMARY KEY , " +
+                ChapterContract.COLUMN_CHAPTERID + " INTEGER NOT NULL , " +
                 ChapterContract.COLUMN_MANGAID + " TEXT NOT NULL, " +
-                ChapterContract.COLUMN_NAME + " TEXT NOT NULL, " +
+                ChapterContract.COLUMN_NAME + " TEXT , " +
                 ChapterContract.COLUMN_LASTUPDATE + " TEXT , " +
+                " PRIMARY KEY (" + ChapterContract.COLUMN_CHAPTERID + ") ON CONFLICT REPLACE, " +
                 "UNIQUE (" +
                 ChapterContract.COLUMN_CHAPTERID + ", " +
                 ChapterContract.COLUMN_MANGAID +
-                ") ON CONFLICT REPLACE, " +
-                "FOREIGN KEY (" + ChapterContract.COLUMN_MANGAID + ") REFERENCES " +
-                MangaContract.ENTITY_NAME + " (" + MangaContract.COLUMN_HREF + "));";
+                ") ON CONFLICT REPLACE );";
 
 
         final String SQL_CREATE_PAGE_TABLE = "CREATE TABLE " +
                 PageContract.ENTITY_NAME + " (" +
-                PageContract.COLUMN_PAGEID + " INTEGER PRIMARY KEY , " +
+                PageContract.COLUMN_PAGEID + " INTEGER NOT NULL , " +
                 PageContract.COLUMN_CHAPTERID + " INTEGER NOT NULL, " +
                 PageContract.COLUMN_URL + " TEXT NOT NULL ,"+
+                " PRIMARY KEY (" + PageContract.COLUMN_PAGEID + ") ON CONFLICT REPLACE, " +
                 "UNIQUE (" +
                 PageContract.COLUMN_PAGEID + ", " +
                 PageContract.COLUMN_CHAPTERID +
-                ") ON CONFLICT REPLACE, " +
-                "FOREIGN KEY (" + PageContract.COLUMN_PAGEID + ") REFERENCES " +
-                ChapterContract.ENTITY_NAME + " (" + ChapterContract.COLUMN_CHAPTERID + "));";
+                ") ON CONFLICT REPLACE );";
 
 
         db.execSQL(SQL_CREATE_MANGA_TABLE);
@@ -78,11 +75,11 @@ public class DataHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    @Override
-    public void onConfigure(SQLiteDatabase db) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            db.setForeignKeyConstraintsEnabled(true);
-        }
-    }
+//    @Override
+//    public void onConfigure(SQLiteDatabase db) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//            db.setForeignKeyConstraintsEnabled(true);
+//        }
+//    }
 
 }

@@ -65,6 +65,11 @@ public class MangaTypeAdapter extends TypeAdapter<Manga> {
     public Manga read(JsonReader in) throws IOException {
         final Manga mManga = new Manga();
 
+        if (in.peek() == JsonToken.NULL) {
+            in.nextNull();
+            return null;
+        }
+
         List<String> mArtists = new ArrayList<String>();
         List<String> mAuthors = new ArrayList<String>();
         List<Chapter> mChapters = new ArrayList<Chapter>();

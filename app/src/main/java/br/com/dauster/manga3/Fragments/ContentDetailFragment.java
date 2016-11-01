@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -16,15 +17,23 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import br.com.dauster.manga3.Loader.MangaSearchById;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import br.com.dauster.manga3.DetailActivity;
+import br.com.dauster.manga3.Loader.MangaSearchById;
 import br.com.dauster.manga3.Model.Manga;
 import br.com.dauster.manga3.R;
+import br.com.dauster.manga3.database.DataContract;
+import br.com.dauster.manga3.database.DataContract.MangaContract;
 import br.com.dauster.manga3.database.DataUtil;
+
 
 public class ContentDetailFragment extends Fragment {
 
-    public static final int LOADER_ID_DETAIL = 2;
+    public static final int LOADER_ID_DETAIL_MANGA  = 2;
+    public static final int LOADER_ID_DETAIL_CURSOR = 3;
     public static final String MANGA_INFO = "info" ;
 
     LoaderManager mLoaderManager;
@@ -65,11 +74,43 @@ public class ContentDetailFragment extends Fragment {
 
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return null;
+            // executa o loader
+            String query = (args != null) ? args.getString(DetailActivity.EXTRA_MANGAID) : "*";
+            return new CursorLoader(getActivity(),
+                    DataContract.buildUri(DataContract.MangaContract.CONTENT_URI,
+                            query),
+                    DataContract.MangaContract.COLUMNS_LIST_MAIN, null, null, null);
         }
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+            String href = data.getString(data.getColumnIndex(MangaContract.COLUMN_HREF));
+
+            List<String> artist = new ArrayList<String>(Arrays.asList(data.getString(data.getColumnIndex(MangaContract.COLUMN_ARTIST)).split(",")));
+            List<String> author = new ArrayList<String>(Arrays.asList(data.getString(data.getColumnIndex(MangaContract.COLUMN_AUTHOR)).split(",")));
+            List<String> genres = new ArrayList<String>(Arrays.asList(data.getString(data.getColumnIndex(MangaContract.COLUMN_GENRES)).split(",")));
+
+            String cover = data.getString(data.getColumnIndex(MangaContract.COLUMN_COVER));
+            String info = data.getString(data.getColumnIndex(MangaContract.COLUMN_INFO));
+            String lastupdate = data.getString(data.getColumnIndex(MangaContract.COLUMN_LASTUPDATE));
+            String name = data.getString(data.getColumnIndex(MangaContract.COLUMN_NAME));
+            String status = data.getString(data.getColumnIndex(MangaContract.COLUMN_STATUS));
+            Long yearofrelease = data.getLong(data.getColumnIndex(MangaContract.COLUMN_YEAROFRELEASE));
+
+            Manga manga = new Manga();
+            manga.setHref(href);
+            manga.setArtist(artist);
+            manga.setAuthor(author);
+            manga.setCover(cover);
+            manga.setGenres(genres);
+            manga.setInfo(info);
+            manga.setLastUpdate(lastupdate);
+            manga.setName(name);
+            manga.setStatus(status);
+            manga.setYearOfRelease(yearofrelease);
+
+            updateUI(manga);
 
         }
 
@@ -109,18 +150,6 @@ public class ContentDetailFragment extends Fragment {
         // Toolbar da Activity para mudar nome de acordo com o manga
         mToolbar    = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
-        mManga = (Manga) getArguments().getSerializable(MANGA_INFO);
-
-        // Inicializamos mManga (ver onSaveInsatnceState)
-        if (DataUtil.isSaveManga(getActivity().getContentResolver(),mManga.getHref())){
-            // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
-            mLoaderManager = getLoaderManager();
-            Bundle params = new Bundle();
-            params.putString(DetailActivity.EXTRA_MANGAID,mManga.getHref());
-            mLoaderManager.initLoader(LOADER_ID_DETAIL, params, this);
-        } else {
-        }
-
         return view;
 
     }
@@ -128,6 +157,21 @@ public class ContentDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mManga = (Manga) getArguments().getSerializable(MANGA_INFO);
+        mLoaderManager = getLoaderManager();
+
+        // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
+        Bundle params = new Bundle();
+        params.putString(DetailActivity.EXTRA_MANGAID,mManga.getHref());
+
+
+        // Inicializamos mManga (ver onSaveInsatnceState)
+        if (!DataUtil.isSaveManga(getActivity().getContentResolver(),mManga.getHref())){
+            mLoaderManager.initLoader(LOADER_ID_DETAIL_MANGA, params, mMangaLoaderCallbacks);
+        } else {
+            mLoaderManager.initLoader(LOADER_ID_DETAIL_CURSOR, params, mMangaCursorLoaderCallbacks);
+        }
     }
 
     @Override
