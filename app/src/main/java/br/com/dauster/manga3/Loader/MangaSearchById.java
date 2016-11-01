@@ -5,6 +5,7 @@ import android.support.v4.content.AsyncTaskLoader;
 
 import br.com.dauster.manga3.Http.MangaHttp;
 import br.com.dauster.manga3.Model.Manga;
+import br.com.dauster.manga3.database.DataUtil;
 
 
 public class MangaSearchById extends AsyncTaskLoader<Manga> {
@@ -31,6 +32,9 @@ public class MangaSearchById extends AsyncTaskLoader<Manga> {
     @Override
     public Manga loadInBackground() {
         mManga = MangaHttp.searchMangaById(mMangaId);
+        if (mManga != null) {
+            DataUtil.handleManga(getContext().getContentResolver(), mManga);
+        }
         mMangaId = null;
         return mManga;
     }

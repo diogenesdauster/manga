@@ -36,7 +36,7 @@ public class DataContract {
 
         // Urls para match
         public static final String URI_PATH      = ENTITY_NAME.toLowerCase();
-        public static final String URI_PATH_NAME = URI_PATH +"/"+COLUMN_NAME;
+        public static final String URI_PATH_NAME = COLUMN_NAME;
 
         // Uris
         public static final Uri CONTENT_URI =
@@ -66,7 +66,7 @@ public class DataContract {
 
         // Urls para match
         public static final String URI_PATH = ENTITY_NAME.toLowerCase();
-        public static final String URI_PATH_MANGA = URI_PATH + "/" + COLUMN_MANGAID;
+        public static final String URI_PATH_MANGA = COLUMN_MANGAID;
 
         // Uris
         public static final Uri CONTENT_URI =
@@ -86,7 +86,7 @@ public class DataContract {
 
         // Urls para match
         public static final String URI_PATH = ENTITY_NAME.toLowerCase();
-        public static final String URI_PATH_CHAPTER = URI_PATH + "/" + COLUMN_CHAPTERID;
+        public static final String URI_PATH_CHAPTER = COLUMN_CHAPTERID;
 
         // Uris
         public static final Uri CONTENT_URI =

@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import br.com.dauster.manga3.Adapter.ViewPagerDetailAdapter;
+import br.com.dauster.manga3.Adapter.DetailPagerAdapter;
 import br.com.dauster.manga3.Model.Manga;
 
 public class DetailActivity extends AppCompatActivity {
@@ -33,12 +33,12 @@ public class DetailActivity extends AppCompatActivity {
 
 
         // Adapter que será responsavel por criação das duas abas do viewpager
-        ViewPagerDetailAdapter viewPagerDetailAdapter =
-                new ViewPagerDetailAdapter(getSupportFragmentManager(),manga);
+        DetailPagerAdapter detailPagerAdapter =
+                new DetailPagerAdapter(getSupportFragmentManager(),manga);
 
         // Seta o ViewPager e adiciona o adapter
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPagerDetail);
-        viewPager.setAdapter(viewPagerDetailAdapter);
+        viewPager.setAdapter(detailPagerAdapter);
 
         // Seta o tablayout e adiciona o viewpager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

@@ -9,11 +9,11 @@ import br.com.dauster.manga3.Fragments.ContentDetailFragment;
 import br.com.dauster.manga3.Model.Manga;
 
 
-public class ViewPagerDetailAdapter extends FragmentPagerAdapter {
+public class DetailPagerAdapter extends FragmentPagerAdapter {
 
     Manga mManga;
 
-    public ViewPagerDetailAdapter(FragmentManager fm, Manga manga) {
+    public DetailPagerAdapter(FragmentManager fm, Manga manga) {
         super(fm);
         mManga = manga;
     }

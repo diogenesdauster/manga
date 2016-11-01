@@ -1,6 +1,7 @@
 package br.com.dauster.manga3.Fragments;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,8 +22,7 @@ import br.com.dauster.manga3.Model.Manga;
 import br.com.dauster.manga3.R;
 import br.com.dauster.manga3.database.DataUtil;
 
-public class ContentDetailFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Manga>{
+public class ContentDetailFragment extends Fragment {
 
     public static final int LOADER_ID_DETAIL = 2;
     public static final String MANGA_INFO = "info" ;
@@ -37,6 +37,47 @@ public class ContentDetailFragment extends Fragment implements
     TextView  mTextName;
     Toolbar   mToolbar;
     Manga     mManga;
+
+
+    LoaderManager.LoaderCallbacks<Manga> mMangaLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<Manga>() {
+        @Override
+        public Loader<Manga> onCreateLoader(int id, Bundle args) {
+            // executa o loader
+            String s = args != null ? args.getString(DetailActivity.EXTRA_MANGAID) : null;
+            return new MangaSearchById(getContext(),s);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Manga> loader, Manga manga) {
+            // atualiza as View
+            updateUI(manga);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Manga> loader) {
+            // Não implementado
+        }
+    };
+
+    LoaderManager.LoaderCallbacks<Cursor> mMangaCursorLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<Cursor>() {
+
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            return null;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+
+        }
+    };
 
 
 
@@ -68,22 +109,17 @@ public class ContentDetailFragment extends Fragment implements
         // Toolbar da Activity para mudar nome de acordo com o manga
         mToolbar    = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
+        mManga = (Manga) getArguments().getSerializable(MANGA_INFO);
+
         // Inicializamos mManga (ver onSaveInsatnceState)
-        if (savedInstanceState == null){
-            // Se não tem um estado anterior, use o que foi passado no método newInstance.
-            mManga = (Manga) getArguments().getSerializable(MANGA_INFO);
+        if (DataUtil.isSaveManga(getActivity().getContentResolver(),mManga.getHref())){
+            // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
+            mLoaderManager = getLoaderManager();
+            Bundle params = new Bundle();
+            params.putString(DetailActivity.EXTRA_MANGAID,mManga.getHref());
+            mLoaderManager.initLoader(LOADER_ID_DETAIL, params, this);
         } else {
-            // Se há um estado anterior, use-o
-            mManga = (Manga) savedInstanceState.getSerializable(MANGA_INFO);
         }
-
-
-        // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
-        mLoaderManager = getLoaderManager();
-        Bundle params = new Bundle();
-        params.putString(DetailActivity.EXTRA_MANGAID,mManga.getHref());
-        mLoaderManager.initLoader(LOADER_ID_DETAIL, params, this);
-
 
         return view;
 
@@ -99,25 +135,6 @@ public class ContentDetailFragment extends Fragment implements
         // Salva o Manga em caso de virar a tela , só por segurança
         // pois o loader vai substituir se a consulta já estiver feita
         outState.putSerializable(MANGA_INFO,mManga);
-    }
-
-
-    @Override
-    public Loader<Manga> onCreateLoader(int id, Bundle args) {
-        // executa o loader
-        String s = args != null ? args.getString(DetailActivity.EXTRA_MANGAID) : null;
-        return new MangaSearchById(getContext(),s);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Manga> loader, Manga manga) {
-        // atualiza as View
-        updateUI(manga);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Manga> loader) {
-        // Não implementado
     }
 
 

@@ -15,14 +15,14 @@ import com.bumptech.glide.Glide;
 import br.com.dauster.manga3.R;
 import br.com.dauster.manga3.database.DataContract;
 
-public class MangaMainListAllAdapter extends RecyclerView.Adapter<MangaMainListAllAdapter.VH> {
+public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.VH> {
 
     Context mContext;
     OnMangaClickListener mMangaClickListener;
     Cursor mCursor;
 
 
-    public MangaMainListAllAdapter(Context mContext) {
+    public MainListAdapter(Context mContext) {
         this.mContext = mContext;
     }
 

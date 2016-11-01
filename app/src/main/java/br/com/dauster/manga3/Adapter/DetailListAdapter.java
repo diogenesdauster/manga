@@ -1,36 +1,41 @@
 package br.com.dauster.manga3.Adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
-import br.com.dauster.manga3.Model.Chapter;
 import br.com.dauster.manga3.R;
+import br.com.dauster.manga3.database.DataContract;
 
 
-public class ChapterDetailAdapter extends RecyclerView.Adapter<ChapterDetailAdapter.VH> {
+public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.VH> {
 
     Context mContext;
-    List <Chapter> mChapters;
+    Cursor mCursor;
     OnChapterClickListener mChapterClickListener;
 
-    public ChapterDetailAdapter(Context context, List<Chapter> chapters) {
+    public DetailListAdapter(Context context) {
         mContext = context;
-        mChapters = chapters;
     }
 
-    public OnChapterClickListener getChapterClickListener() {
-        return mChapterClickListener;
-    }
 
     public void setChapterClickListener(OnChapterClickListener chapterClickListener) {
         this.mChapterClickListener = chapterClickListener;
     }
+
+    public Cursor getCursor() {
+        return mCursor;
+    }
+
+    public void swapCursor(Cursor mCursor) {
+        this.mCursor = mCursor;
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,7 +49,8 @@ public class ChapterDetailAdapter extends RecyclerView.Adapter<ChapterDetailAdap
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
-                    mChapterClickListener.onChapterClick(mChapters.get(position),position);
+                    mCursor.moveToPosition(position);
+                    mChapterClickListener.onChapterClick(mCursor,position);
                 }
             });
         }
@@ -55,15 +61,21 @@ public class ChapterDetailAdapter extends RecyclerView.Adapter<ChapterDetailAdap
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        Chapter chapter = mChapters.get(position);
-        holder.txtChapter.setText(String.valueOf(chapter.getChapterId()));
-        holder.txtName.setText(chapter.getName());
+        mCursor.moveToPosition(position);
+        Long chapeterid = mCursor.getLong(mCursor.
+                getColumnIndex(DataContract.ChapterContract.COLUMN_CHAPTERID));
+        String name = mCursor.getString(mCursor.
+                getColumnIndex(DataContract.ChapterContract.COLUMN_NAME));
+
+
+        holder.txtChapter.setText(String.valueOf(chapeterid));
+        holder.txtName.setText(name);
 
     }
 
     @Override
     public int getItemCount() {
-        return mChapters.size();
+        return (mCursor != null) ? mCursor.getCount() : 0;
     }
 
     public static class VH extends RecyclerView.ViewHolder {
@@ -81,6 +93,6 @@ public class ChapterDetailAdapter extends RecyclerView.Adapter<ChapterDetailAdap
 
 
     public static interface OnChapterClickListener {
-         void onChapterClick(Chapter chapter,int position);
+         void onChapterClick(Cursor cursor,int position);
     }
 }

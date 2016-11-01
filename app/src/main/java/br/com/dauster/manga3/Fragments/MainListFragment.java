@@ -18,7 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import br.com.dauster.manga3.Adapter.MangaMainListAllAdapter;
+import br.com.dauster.manga3.Adapter.MainListAdapter;
 import br.com.dauster.manga3.DetailActivity;
 import br.com.dauster.manga3.Http.MangaIntentService;
 import br.com.dauster.manga3.R;
@@ -31,38 +31,41 @@ public class MainListFragment extends Fragment implements
 
     private static final int LOADER_ID = 1 ;
 
-    Boolean mSync = true;
     RecyclerView mRecyclerView;
-    MangaMainListAllAdapter mAdapter;
+    MainListAdapter mAdapter;
     LoaderManager mLoaderManager;
     BroadcastReceiver mServiceReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            sincronizar();
+            mLoaderManager.restartLoader(LOADER_ID,new Bundle(),MainListFragment.this);
         }
     };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_mangas_list, container, false);
 
 
+        if(savedInstanceState == null){
 
-        if(mSync) {
             IntentFilter filter = new IntentFilter(MangaIntentService.SINCRONIZAR);
             LocalBroadcastManager.getInstance(getActivity()).
                     registerReceiver(mServiceReceiver, filter);
-            mSync = false;
-        }
 
-        View view = inflater.inflate(R.layout.fragment_mangas_list, container, false);
+            Intent it = new Intent(getActivity(),MangaIntentService.class);
+            it.putExtra(MangaIntentService.SINCRONIZAR, true);
+            getActivity().startService(it);
+
+        }
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.lista);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new MangaMainListAllAdapter(getActivity());
-        mAdapter.setMangaClickListener(new MangaMainListAllAdapter.OnMangaClickListener() {
+        mAdapter = new MainListAdapter(getActivity());
+        mAdapter.setMangaClickListener(new MainListAdapter.OnMangaClickListener() {
             @Override
             public void onMangaClick(Cursor cursor, int position) {
                 cursor.moveToPosition(position);
@@ -75,7 +78,6 @@ public class MainListFragment extends Fragment implements
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         mRecyclerView.setAdapter(mAdapter);
-
 
         return view;
     }
@@ -90,17 +92,9 @@ public class MainListFragment extends Fragment implements
 
     }
 
-
-    public void sincronizar(){
-        mLoaderManager.destroyLoader(LOADER_ID);
-        mLoaderManager.restartLoader(LOADER_ID,new Bundle(),this);
-    }
-
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(MangaIntentService.SINCRONIZAR,false);
     }
 
     @Override
@@ -112,12 +106,9 @@ public class MainListFragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if(args != null) {
             return new CursorLoader(getActivity(),
                     MangaContract.CONTENT_URI,
                     MangaContract.COLUMNS_LIST_MAIN, null, null, null);
-        }
-        return null;
     }
 
     @Override

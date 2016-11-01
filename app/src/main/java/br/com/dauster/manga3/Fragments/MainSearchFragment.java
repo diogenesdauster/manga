@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import br.com.dauster.manga3.Adapter.MangaMainListAllAdapter;
+import br.com.dauster.manga3.Adapter.MainListAdapter;
 import br.com.dauster.manga3.DetailActivity;
 import br.com.dauster.manga3.R;
 import br.com.dauster.manga3.database.DataContract;
@@ -30,21 +30,20 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
     private static final String MANGA_ARGS = "args" ;
     private static final int LOADER_ID = 2 ;
     RecyclerView mRecyclerView;
-    MangaMainListAllAdapter mAdapter;
+    MainListAdapter mAdapter;
     LoaderManager mLoaderManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_mangas_list, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.lista);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new MangaMainListAllAdapter(getActivity());
-        mAdapter.setMangaClickListener(new MangaMainListAllAdapter.OnMangaClickListener() {
+        mAdapter = new MainListAdapter(getActivity());
+        mAdapter.setMangaClickListener(new MainListAdapter.OnMangaClickListener() {
             @Override
             public void onMangaClick(Cursor cursor, int position) {
                 cursor.moveToPosition(position);
@@ -65,7 +64,6 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setHasOptionsMenu(true);
 
         mLoaderManager = getLoaderManager();
@@ -86,8 +84,7 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
     public boolean onQueryTextSubmit(String query) {
         Bundle params = new Bundle();
         params.putString(MANGA_ARGS, query);
-        mLoaderManager.destroyLoader(LOADER_ID);
-        mLoaderManager.restartLoader(LOADER_ID,new Bundle(),this);
+        mLoaderManager.restartLoader(LOADER_ID,params,this);
         return false;
     }
 
@@ -100,13 +97,19 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if (args != null){
+
+        String query;
+
+        if(args == null){
+            query = "*";
+        }else {
+            query = args.getString(MANGA_ARGS);
+        }
+
             return new CursorLoader(getActivity(),
                     DataContract.buildUri(DataContract.MangaContract.CONTENT_URI_NAME,
-                            args.getString(MANGA_ARGS)),
+                            query),
                     DataContract.MangaContract.COLUMNS_LIST_MAIN, null, null, null);
-        }
-        return null;
     }
 
     @Override

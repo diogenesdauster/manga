@@ -127,6 +127,30 @@ public class DataProvider extends ContentProvider {
 
 
     @Override
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
+        String entityName = getEntityName(uri);
+        SQLiteDatabase db = mDataHelper.getWritableDatabase();
+        db.beginTransaction();
+        int returnCount = 0;
+        try {
+            for (ContentValues value : values) {
+                long id = db.insert(entityName, null, value);
+                if (id > 0) {
+                    returnCount++;
+                }
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        //noinspection ConstantConditions
+        getContext().getContentResolver().notifyChange(uri, null);
+        return returnCount;
+    }
+
+
+
+    @Override
     public boolean onCreate() {
         // Criado a instacia do Banco de Dados
         mDataHelper = new DataHelper(getContext());
@@ -147,10 +171,18 @@ public class DataProvider extends ContentProvider {
                 cursor = db.query(MangaContract.ENTITY_NAME,
                         projection, selection, selectionArgs, null, null, sortOrder,"100");
                 break;
-            case MANGA_SEARCH:
-                String query = uri.getLastPathSegment();
+            case MANGA_ID:
+                String queryId = uri.getLastPathSegment();
                 cursor = db.query(MangaContract.ENTITY_NAME,
-                        projection, MangaContract.COLUMN_NAME + " LIKE ?", new String[]{query + "%"}
+                        projection, MangaContract.COLUMN_NAME + " = ?", new String[]{queryId}
+                        , null, null,
+                        sortOrder);
+                break;
+            case MANGA_SEARCH:
+                String querySearch = uri.getLastPathSegment();
+                cursor = db.query(MangaContract.ENTITY_NAME,
+                        projection, MangaContract.COLUMN_NAME + " LIKE ?",
+                        new String[]{"%"+ querySearch + "%"}
                         , null, null,
                         sortOrder);
 
