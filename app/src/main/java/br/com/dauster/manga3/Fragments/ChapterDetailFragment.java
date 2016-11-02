@@ -21,7 +21,9 @@ import android.view.ViewGroup;
 
 import br.com.dauster.manga3.Adapter.DetailListAdapter;
 import br.com.dauster.manga3.DetailActivity;
+import br.com.dauster.manga3.GalleryActivity;
 import br.com.dauster.manga3.Http.MangaIntentService;
+import br.com.dauster.manga3.Model.Chapter;
 import br.com.dauster.manga3.Model.Manga;
 import br.com.dauster.manga3.R;
 import br.com.dauster.manga3.database.DataContract;
@@ -31,6 +33,8 @@ public class ChapterDetailFragment extends Fragment implements LoaderManager.Loa
 
 
     private static final int LOADER_ID_DETAIL_CHAPTER = 4 ;
+    public static final String CHAPTER_INFO = "chapter";
+
     LoaderManager mLoaderManager;
     DetailListAdapter mAdapter;
     Manga mManga;
@@ -67,6 +71,20 @@ public class ChapterDetailFragment extends Fragment implements LoaderManager.Loa
         recyclerView.setHasFixedSize(true);
 
         mAdapter = new DetailListAdapter(getActivity());
+
+        mAdapter.setChapterClickListener(new DetailListAdapter.OnChapterClickListener() {
+            @Override
+            public void onChapterClick(Cursor cursor, int position) {
+                cursor.moveToPosition(position);
+                Intent it = new Intent(getActivity(),GalleryActivity.class);
+                Chapter chapter = new Chapter();
+                chapter.setChapterId(cursor.getLong(cursor.getColumnIndex(DataContract.ChapterContract.COLUMN_CHAPTERID)));
+                chapter.setHref(cursor.getString(cursor.getColumnIndex(DataContract.ChapterContract.COLUMN_MANGAID)));
+                it.putExtra(CHAPTER_INFO,chapter);
+                startActivity(it);
+
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(mAdapter);

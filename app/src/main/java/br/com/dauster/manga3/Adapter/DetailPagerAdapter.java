@@ -41,7 +41,7 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                return "Info";
+                return "Info"; //getString não está funcionando ver depois
             case 1:
                 return "Chapter";
             default:

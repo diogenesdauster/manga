@@ -33,7 +33,9 @@
 
         <service
             android:name=".Http.MangaIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".GalleryActivity"></activity>
     </application>
 
 </manifest>

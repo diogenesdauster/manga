@@ -104,7 +104,7 @@ public class DataContract {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendEncodedPath(URI_PATH).build();
 
-        public static final Uri CONTENT_URI_MANGAID =
+        public static final Uri CONTENT_URI_CHAPTERID =
                 BASE_CONTENT_URI.buildUpon().appendEncodedPath(URI_PATH_CHAPTER).build();
 
         // Colunas Query

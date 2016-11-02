@@ -51,7 +51,7 @@ public class DataProvider extends ContentProvider {
         matcher.addURI(authority, MangaContract.URI_PATH_NAME + TEXT, MANGA_SEARCH);
 
         matcher.addURI(authority, ChapterContract.URI_PATH, CHAPTER);
-        matcher.addURI(authority, ChapterContract.URI_PATH + NUMBER, CHAPTER_ID);
+        matcher.addURI(authority, ChapterContract.URI_PATH + NUMBER + TEXT, CHAPTER_ID);
         matcher.addURI(authority, ChapterContract.URI_PATH_MANGA + TEXT, CHAPTER_MANGA);
 
         matcher.addURI(authority, PageContract.URI_PATH, PAGE);
@@ -261,6 +261,7 @@ public class DataProvider extends ContentProvider {
                 break;
             case PAGE_CHAPTER:
                 String queryPageChapterId = uri.getLastPathSegment();
+                //uri.getPathSegments
                 cursor = db.query(ChapterContract.ENTITY_NAME,
                         projection, ChapterContract.COLUMN_CHAPTERID + " = ?",
                         new String[]{queryPageChapterId}

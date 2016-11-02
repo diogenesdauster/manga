@@ -186,7 +186,7 @@ public class DataUtil {
     }
 
 
-    public static Boolean isSaveChapter(ContentResolver contentResolver, Long chapterId){
+    public static Boolean isSaveChapter(ContentResolver contentResolver, Long chapterId,String mangaId){
 
         Cursor cursor = contentResolver.query(
                 ContentUris.appendId(DataContract.ChapterContract.CONTENT_URI.buildUpon(),chapterId).build(),
