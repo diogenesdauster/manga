@@ -8,7 +8,8 @@ import java.util.List;
 
 public class Manga implements Serializable {
 
-    private Long Id;
+    @SerializedName("mangaId")
+    private String mMangaId;
     @SerializedName("artist")
     private List<String> mArtist;
     @SerializedName("author")
@@ -19,7 +20,7 @@ public class Manga implements Serializable {
     private String mCover;
     @SerializedName("genres")
     private List<String> mGenres;
-    @SerializedName(value="mHref",alternate = {"href","mangaId"})
+    @SerializedName("href")
     private String mHref;
     @SerializedName("info")
     private String mInfo;
@@ -120,12 +121,12 @@ public class Manga implements Serializable {
         mYearOfRelease = yearOfRelease;
     }
 
-    public Long getId() {
-        return Id;
+    public String getMangaId() {
+        return mMangaId;
     }
 
-    public void setId(Long id) {
-        Id = id;
+    public void setMangaId(String mangaId) {
+        mMangaId = mangaId;
     }
 
 }

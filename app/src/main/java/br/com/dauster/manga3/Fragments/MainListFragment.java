@@ -29,15 +29,14 @@ import br.com.dauster.manga3.database.DataContract.MangaContract;
 public class MainListFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int LOADER_ID = 1 ;
+    private static final int LOADER_MAIN_LIST_ID = 1 ;
 
-    RecyclerView mRecyclerView;
     MainListAdapter mAdapter;
     LoaderManager mLoaderManager;
     BroadcastReceiver mServiceReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mLoaderManager.restartLoader(LOADER_ID,new Bundle(),MainListFragment.this);
+            mLoaderManager.restartLoader(LOADER_MAIN_LIST_ID,new Bundle(),MainListFragment.this);
         }
     };
 
@@ -61,8 +60,8 @@ public class MainListFragment extends Fragment implements
 
         }
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.lista);
-        mRecyclerView.setHasFixedSize(true);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.lista);
+        recyclerView.setHasFixedSize(true);
 
         mAdapter = new MainListAdapter(getActivity());
         mAdapter.setMangaClickListener(new MainListAdapter.OnMangaClickListener() {
@@ -71,13 +70,13 @@ public class MainListFragment extends Fragment implements
                 cursor.moveToPosition(position);
                 Intent it = new Intent(getActivity(), DetailActivity.class);
                 it.putExtra(DetailActivity.EXTRA_MANGAID,
-                        cursor.getString(cursor.getColumnIndex(MangaContract.COLUMN_HREF)));
+                        cursor.getString(cursor.getColumnIndex(MangaContract.COLUMN_MANGAID)));
                 startActivity(it);
             }
         });
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        recyclerView.setAdapter(mAdapter);
 
         return view;
     }
@@ -88,7 +87,7 @@ public class MainListFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         mLoaderManager = getLoaderManager();
-        mLoaderManager.initLoader(LOADER_ID, null, this);
+        mLoaderManager.initLoader(LOADER_MAIN_LIST_ID, null, this);
 
     }
 

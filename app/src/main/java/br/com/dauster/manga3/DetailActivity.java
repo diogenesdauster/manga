@@ -22,7 +22,7 @@ public class DetailActivity extends AppCompatActivity {
 
         // Cria um objeto manga e passa coloca seu Id vindo da tela principal
         Manga manga = new Manga();
-        manga.setHref(getIntent().getExtras().getString(EXTRA_MANGAID));
+        manga.setMangaId(getIntent().getExtras().getString(EXTRA_MANGAID));
 
         // Adicionado o ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

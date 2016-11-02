@@ -69,7 +69,15 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.VH
 
 
         holder.txtChapter.setText(String.valueOf(chapeterid));
-        holder.txtName.setText(name);
+
+        if(name != null){
+            holder.txtName.setVisibility(View.VISIBLE);
+            holder.txtName.setText(name);
+        }else {
+            holder.txtName.setVisibility(View.INVISIBLE);
+        }
+
+
 
     }
 

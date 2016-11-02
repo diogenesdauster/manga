@@ -23,6 +23,7 @@ public class DataContract {
 
         //Colunas
         public static final String ENTITY_NAME = Manga.class.getSimpleName();
+        public static final String COLUMN_MANGAID = "mangaid";
         public static final String COLUMN_HREF = "href";
         public static final String COLUMN_ARTIST = "artist";
         public static final String COLUMN_AUTHOR = "author";
@@ -48,14 +49,14 @@ public class DataContract {
 
         // Colunas Query
         public static String[] COLUMNS_LIST_MAIN = new String[]{
-                COLUMN_HREF,
+                COLUMN_MANGAID,
                 COLUMN_NAME,
                 COLUMN_COVER
         };
 
     }
 
-    // Colunas e funcoes da tabela manga
+    // Colunas e funcoes da tabela Chapter
     public static final class ChapterContract implements BaseColumns {
         //Colunas
         public static final String ENTITY_NAME = Chapter.class.getSimpleName();
@@ -74,6 +75,17 @@ public class DataContract {
 
         public static final Uri CONTENT_URI_MANGAID =
                 BASE_CONTENT_URI.buildUpon().appendEncodedPath(URI_PATH_MANGA).build();
+
+
+        // Colunas Query
+        public static String[] COLUMNS_LIST_MAIN = new String[]{
+                COLUMN_CHAPTERID,
+                COLUMN_MANGAID,
+                COLUMN_NAME,
+                COLUMN_LASTUPDATE
+        };
+
+
 
     }
 
@@ -94,6 +106,13 @@ public class DataContract {
 
         public static final Uri CONTENT_URI_MANGAID =
                 BASE_CONTENT_URI.buildUpon().appendEncodedPath(URI_PATH_CHAPTER).build();
+
+        // Colunas Query
+        public static String[] COLUMNS_LIST_MAIN = new String[]{
+                COLUMN_CHAPTERID,
+                COLUMN_CHAPTERID,
+                COLUMN_URL,
+        };
 
 
     }

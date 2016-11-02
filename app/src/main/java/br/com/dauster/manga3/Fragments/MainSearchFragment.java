@@ -28,7 +28,7 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String MANGA_ARGS = "args" ;
-    private static final int LOADER_ID = 2 ;
+    private static final int LOADER_MAIN_SEARCH_ID = 2 ;
     RecyclerView mRecyclerView;
     MainListAdapter mAdapter;
     LoaderManager mLoaderManager;
@@ -49,7 +49,7 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
                 cursor.moveToPosition(position);
                 Intent it = new Intent(getActivity(), DetailActivity.class);
                 it.putExtra(DetailActivity.EXTRA_MANGAID,
-                        cursor.getString(cursor.getColumnIndex(DataContract.MangaContract.COLUMN_HREF)));
+                        cursor.getString(cursor.getColumnIndex(DataContract.MangaContract.COLUMN_MANGAID)));
                 startActivity(it);
             }
         });
@@ -67,7 +67,7 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
         setHasOptionsMenu(true);
 
         mLoaderManager = getLoaderManager();
-        mLoaderManager.initLoader(LOADER_ID, null, this);
+        mLoaderManager.initLoader(LOADER_MAIN_SEARCH_ID, null, this);
 
     }
 
@@ -84,7 +84,7 @@ public class MainSearchFragment extends Fragment implements SearchView.OnQueryTe
     public boolean onQueryTextSubmit(String query) {
         Bundle params = new Bundle();
         params.putString(MANGA_ARGS, query);
-        mLoaderManager.restartLoader(LOADER_ID,params,this);
+        mLoaderManager.restartLoader(LOADER_MAIN_SEARCH_ID,params,this);
         return false;
     }
 

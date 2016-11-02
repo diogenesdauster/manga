@@ -14,7 +14,7 @@ import br.com.dauster.manga3.database.DataContract.ChapterContract;
 import br.com.dauster.manga3.database.DataContract.MangaContract;
 import br.com.dauster.manga3.database.DataContract.PageContract;
 
-import static br.com.dauster.manga3.database.DataContract.*;
+import static br.com.dauster.manga3.database.DataContract.CONTENT_AUTHORITY;
 
 public class DataProvider extends ContentProvider {
 
@@ -52,13 +52,62 @@ public class DataProvider extends ContentProvider {
 
         matcher.addURI(authority, ChapterContract.URI_PATH, CHAPTER);
         matcher.addURI(authority, ChapterContract.URI_PATH + NUMBER, CHAPTER_ID);
-        matcher.addURI(authority, ChapterContract.URI_PATH_MANGA + NUMBER, CHAPTER_MANGA);
+        matcher.addURI(authority, ChapterContract.URI_PATH_MANGA + TEXT, CHAPTER_MANGA);
 
         matcher.addURI(authority, PageContract.URI_PATH, PAGE);
         matcher.addURI(authority, PageContract.URI_PATH + NUMBER, PAGE_ID);
         matcher.addURI(authority, PageContract.URI_PATH_CHAPTER + NUMBER, PAGE_CHAPTER);
         return matcher;
     }
+
+//TODO : implementar relacionamentos testar depois
+//    private static sqlitequerybuilder buildmangaquerybuilder() {
+//        sqlitequerybuilder querybuilder = new sqlitequerybuilder();
+//        querybuilder.setdistinct(true);
+//        querybuilder.settables(mangacontract.entity_name +
+//                " left join " + chaptercontract.entity_name +
+//                " on " + mangacontract.column_href +
+//                " = " + chaptercontract.column_mangaid
+//        );
+//        map<string, string> projectionmap = new hashmap<>();
+//        projectionmap.put(mangacontract.column_href,mangacontract.column_href );
+//        projectionmap.put(mangacontract.column_artist,mangacontract.column_artist);
+//        projectionmap.put(mangacontract.column_author,mangacontract.column_author);
+//        projectionmap.put(mangacontract.column_cover,mangacontract.column_cover);
+//        projectionmap.put(mangacontract.column_genres,mangacontract.column_genres);
+//        projectionmap.put(mangacontract.column_info,mangacontract.column_info);
+//        projectionmap.put(mangacontract.column_lastupdate,mangacontract.column_lastupdate);
+//        projectionmap.put(mangacontract.column_name,mangacontract.column_name);
+//        projectionmap.put(mangacontract.column_status,mangacontract.column_status);
+//        projectionmap.put(mangacontract.column_yearofrelease, mangacontract.column_yearofrelease);
+//        projectionmap.put(chaptercontract.column_chapterid, chaptercontract.column_chapterid);
+//        projectionmap.put(chaptercontract.column_mangaid, chaptercontract.column_mangaid);
+//        projectionmap.put(chaptercontract.column_name, chaptercontract.column_name);
+//        projectionmap.put(chaptercontract.column_lastupdate, chaptercontract.column_lastupdate);
+//        querybuilder.setprojectionmap(projectionmap);
+//        return querybuilder;
+//    }
+//    private static sqlitequerybuilder buildchapterquerybuilder() {
+//        sqlitequerybuilder querybuilder = new sqlitequerybuilder();
+//        querybuilder.setdistinct(true);
+//        querybuilder.settables(chaptercontract.entity_name +
+//                " left join " + pagecontract.entity_name +
+//                " on " + pagecontract.column_chapterid +
+//                " = " +  chaptercontract.column_chapterid
+//        );
+//        map<string, string> projectionmap = new hashmap<>();
+//
+//        projectionmap.put(chaptercontract.column_chapterid, chaptercontract.column_chapterid);
+//        projectionmap.put(chaptercontract.column_mangaid, chaptercontract.column_mangaid);
+//        projectionmap.put(chaptercontract.column_name, chaptercontract.column_name);
+//        projectionmap.put(chaptercontract.column_lastupdate, chaptercontract.column_lastupdate);
+//        projectionmap.put(pagecontract.column_chapterid, pagecontract.column_chapterid);
+//        projectionmap.put(pagecontract.column_pageid, pagecontract.column_pageid);
+//        projectionmap.put(pagecontract.column_url, pagecontract.column_url);
+//
+//        querybuilder.setprojectionmap(projectionmap);
+//        return querybuilder;
+//    }
 
     public DataProvider() {
     }
@@ -169,23 +218,54 @@ public class DataProvider extends ContentProvider {
 
             case MANGA:
                 cursor = db.query(MangaContract.ENTITY_NAME,
-                        projection, selection, selectionArgs, null, null, sortOrder,"100");
+                        projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case MANGA_ID:
-                String queryId = uri.getLastPathSegment();
+                String queryMangaId = uri.getLastPathSegment();
                 cursor = db.query(MangaContract.ENTITY_NAME,
-                        projection, MangaContract.COLUMN_NAME + " = ?", new String[]{queryId}
+                        projection, MangaContract.COLUMN_NAME + " = ?", new String[]{queryMangaId}
                         , null, null,
                         sortOrder);
                 break;
             case MANGA_SEARCH:
-                String querySearch = uri.getLastPathSegment();
+                String queryMangaSearch = uri.getLastPathSegment();
                 cursor = db.query(MangaContract.ENTITY_NAME,
                         projection, MangaContract.COLUMN_NAME + " LIKE ?",
-                        new String[]{"%"+ querySearch + "%"}
+                        new String[]{"%"+ queryMangaSearch + "%"}
                         , null, null,
                         sortOrder);
-
+                break;
+            case CHAPTER_ID:
+                String queryChapterId = uri.getLastPathSegment();
+                cursor = db.query(ChapterContract.ENTITY_NAME,
+                        projection, ChapterContract.COLUMN_CHAPTERID + " = ?",
+                        new String[]{queryChapterId}
+                        , null, null,
+                        sortOrder);
+                break;
+            case CHAPTER_MANGA:
+                String queryChapterMangaId = uri.getLastPathSegment();
+                cursor = db.query(ChapterContract.ENTITY_NAME,
+                        projection, ChapterContract.COLUMN_MANGAID + " = ?",
+                        new String[]{queryChapterMangaId}
+                        , null, null,
+                        sortOrder);
+                break;
+            case PAGE_ID:
+                String queryPageId = uri.getLastPathSegment();
+                cursor = db.query(PageContract.ENTITY_NAME,
+                        projection, PageContract.COLUMN_PAGEID + " = ?",
+                        new String[]{queryPageId}
+                        , null, null,
+                        sortOrder);
+                break;
+            case PAGE_CHAPTER:
+                String queryPageChapterId = uri.getLastPathSegment();
+                cursor = db.query(ChapterContract.ENTITY_NAME,
+                        projection, ChapterContract.COLUMN_CHAPTERID + " = ?",
+                        new String[]{queryPageChapterId}
+                        , null, null,
+                        sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid Uri");

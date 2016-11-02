@@ -27,7 +27,7 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
                 ContentDetailFragment fragDetail = new ContentDetailFragment().newInstace(mManga);
                 return fragDetail;
             case 1:
-                ChapterDetailFragment fragChapter = new ChapterDetailFragment();
+                ChapterDetailFragment fragChapter = new ChapterDetailFragment().newInstace(mManga);
                 return fragChapter;
             default:
                 fragDetail = new ContentDetailFragment();

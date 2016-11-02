@@ -12,7 +12,7 @@ import br.com.dauster.manga3.database.DataContract.PageContract;
 public class DataHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "mangas.db";
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
 
     public DataHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -24,7 +24,8 @@ public class DataHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_MANGA_TABLE = "CREATE TABLE " +
                 MangaContract.ENTITY_NAME + " (" +
-                MangaContract.COLUMN_HREF + " TEXT NOT NULL, " +
+                MangaContract.COLUMN_MANGAID + " TEXT NOT NULL, " +
+                MangaContract.COLUMN_HREF + " TEXT , " +
                 MangaContract.COLUMN_ARTIST + " TEXT , " +
                 MangaContract.COLUMN_AUTHOR + " TEXT , " +
                 MangaContract.COLUMN_COVER + " TEXT , " +
@@ -34,7 +35,7 @@ public class DataHelper extends SQLiteOpenHelper {
                 MangaContract.COLUMN_NAME + " TEXT NOT NULL, " +
                 MangaContract.COLUMN_STATUS + " TEXT , " +
                 MangaContract.COLUMN_YEAROFRELEASE + " INTEGER, "+
-                " PRIMARY KEY (" + MangaContract.COLUMN_HREF + ") ON CONFLICT REPLACE);";
+                " PRIMARY KEY (" + MangaContract.COLUMN_MANGAID + ") ON CONFLICT REPLACE);";
 
 
         final String SQL_CREATE_CHAPTER_TABLE = "CREATE TABLE " +

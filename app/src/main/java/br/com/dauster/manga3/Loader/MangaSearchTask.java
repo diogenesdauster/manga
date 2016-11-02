@@ -6,7 +6,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.dauster.manga3.Http.MangaHttp;
+import br.com.dauster.manga3.Http.MangaApi;
 import br.com.dauster.manga3.Model.Manga;
 
 
@@ -36,9 +36,9 @@ public class MangaSearchTask extends AsyncTaskLoader<List<Manga>> {
     @Override
     public List<Manga> loadInBackground() {
         if(query == "ALL") {
-            mangas.addAll(MangaHttp.getListMangas());
+            mangas.addAll(MangaApi.getListMangas());
         }else{
-            mangas.addAll(MangaHttp.searchManga(query));
+            mangas.addAll(MangaApi.searchManga(query));
         }
         query = null;
         return mangas;

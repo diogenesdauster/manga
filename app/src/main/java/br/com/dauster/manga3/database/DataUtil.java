@@ -4,8 +4,11 @@ package br.com.dauster.manga3.database;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +21,17 @@ public class DataUtil {
 
 
     public static String listToString(List<String> lista){
+
+        if (lista == null){
+            return "";
+        }
+
         String result = "";
         for (String value: lista) {
             result +=value +" ,";
         }
 
-        return result.substring(0,result.length()-1);
+        return result.substring(0,(result.length() > 0) ? result.length()-1 : 0);
     }
 
 
@@ -33,7 +41,7 @@ public class DataUtil {
 
         for (Manga manga : mangas) {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(DataContract.MangaContract.COLUMN_HREF, manga.getHref());
+            contentValues.put(DataContract.MangaContract.COLUMN_MANGAID, manga.getMangaId());
             contentValues.put(DataContract.MangaContract.COLUMN_NAME, manga.getName());
             contentValues.put(DataContract.MangaContract.COLUMN_COVER, manga.getCover());
             contentValuesList.add(contentValues);
@@ -97,6 +105,7 @@ public class DataUtil {
 
 
         ContentValues contentValues = new ContentValues();
+        contentValues.put(DataContract.MangaContract.COLUMN_MANGAID,manga.getMangaId());
         contentValues.put(DataContract.MangaContract.COLUMN_AUTHOR,listToString(manga.getAuthor()));
         contentValues.put(DataContract.MangaContract.COLUMN_ARTIST,listToString(manga.getArtist()));
         contentValues.put(DataContract.MangaContract.COLUMN_COVER,manga.getCover());
@@ -112,7 +121,7 @@ public class DataUtil {
         Uri result = contentResolver.insert(DataContract.MangaContract.CONTENT_URI,
                 contentValues);
 
-        handleListChapter(contentResolver,manga.getChapters(),manga.getHref());
+        handleListChapter(contentResolver,manga.getChapters(),manga.getMangaId());
 
         return result;
 
@@ -166,8 +175,10 @@ public class DataUtil {
         if (cursor != null) {
             isSave = cursor.getCount() > 0;
             if(isSave) {
-                isSave = !cursor.getString(cursor.getColumnIndex(
-                        DataContract.MangaContract.COLUMN_INFO)).isEmpty();
+                String info = cursor.getString(cursor.getColumnIndex(
+                        DataContract.MangaContract.COLUMN_INFO));
+                isSave = info != null;
+
             }
             cursor.close();
         }
@@ -186,12 +197,26 @@ public class DataUtil {
         );
         boolean isSave = false;
         if (cursor != null) {
-            isSave = !cursor.getString(cursor.getColumnIndex(
-                    DataContract.MangaContract.COLUMN_LASTUPDATE)).isEmpty();
-            cursor.close();
+            String lastupdate = cursor.getString(cursor.getColumnIndex(
+                    DataContract.MangaContract.COLUMN_LASTUPDATE));
+            isSave = lastupdate != null;
+
         }
+        cursor.close();
         return isSave;
     }
+
+
+    // funcao que cria uma mensagem de broadcast
+    public static void sendMessage(String tag, Boolean message, Context ctx) {
+        LocalBroadcastManager bcM;
+        Intent it = new Intent(tag);
+        bcM = LocalBroadcastManager.getInstance(ctx);
+        it.putExtra(tag, message);
+        bcM.sendBroadcast(it);
+    }
+
+
 
 //    public static Boolean isSavePage(ContentResolver contentResolver, Long pageId){
 //        Cursor cursor = contentResolver.query(

@@ -35,6 +35,7 @@ public class ContentDetailFragment extends Fragment {
     public static final int LOADER_ID_DETAIL_MANGA  = 2;
     public static final int LOADER_ID_DETAIL_CURSOR = 3;
     public static final String MANGA_INFO = "info" ;
+    public static final String ATUALIZA = "atualiza" ;
 
     LoaderManager mLoaderManager;
     ImageView mImgCover;
@@ -85,6 +86,7 @@ public class ContentDetailFragment extends Fragment {
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
+            String mangaid =data.getString(data.getColumnIndex(MangaContract.COLUMN_MANGAID));
             String href = data.getString(data.getColumnIndex(MangaContract.COLUMN_HREF));
 
             List<String> artist = new ArrayList<String>(Arrays.asList(data.getString(data.getColumnIndex(MangaContract.COLUMN_ARTIST)).split(",")));
@@ -99,6 +101,7 @@ public class ContentDetailFragment extends Fragment {
             Long yearofrelease = data.getLong(data.getColumnIndex(MangaContract.COLUMN_YEAROFRELEASE));
 
             Manga manga = new Manga();
+            manga.setMangaId(mangaid);
             manga.setHref(href);
             manga.setArtist(artist);
             manga.setAuthor(author);
@@ -161,15 +164,17 @@ public class ContentDetailFragment extends Fragment {
         mManga = (Manga) getArguments().getSerializable(MANGA_INFO);
         mLoaderManager = getLoaderManager();
 
-        // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
-        Bundle params = new Bundle();
-        params.putString(DetailActivity.EXTRA_MANGAID,mManga.getHref());
-
 
         // Inicializamos mManga (ver onSaveInsatnceState)
-        if (!DataUtil.isSaveManga(getActivity().getContentResolver(),mManga.getHref())){
+        if (!DataUtil.isSaveManga(getActivity().getContentResolver(),mManga.getMangaId())){
+            // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
+            Bundle params = new Bundle();
+            params.putString(DetailActivity.EXTRA_MANGAID,mManga.getMangaId());
             mLoaderManager.initLoader(LOADER_ID_DETAIL_MANGA, params, mMangaLoaderCallbacks);
         } else {
+            // Pega o LoderManager para iniciar o loader passando como parametro o id do manga
+            Bundle params = new Bundle();
+            params.putString(DetailActivity.EXTRA_MANGAID,mManga.getMangaId());
             mLoaderManager.initLoader(LOADER_ID_DETAIL_CURSOR, params, mMangaCursorLoaderCallbacks);
         }
     }
@@ -199,6 +204,9 @@ public class ContentDetailFragment extends Fragment {
             Glide.with(getContext()).load(manga.getCover()).
                     placeholder(R.drawable.ic_do_not_disturb_black_200dp).
                     into(mImgCover);
+
+            DataUtil.sendMessage(ATUALIZA,true,getActivity());
+
         }
 
     }
